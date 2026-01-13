@@ -1,35 +1,9 @@
 import './FavoriteSongs.css'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-
-const songs = [
-  {
-    id: 1,
-    title: "Song Title One",
-    artist: "Artist Name",
-  },
-  {
-    id: 2,
-    title: "Song Title Two",
-    artist: "Artist Name",
-  },
-  {
-    id: 3,
-    title: "Song Title Three",
-    artist: "Artist Name",
-  },
-  {
-    id: 4,
-    title: "Song Title Four",
-    artist: "Artist Name",
-  },
-  {
-    id: 5,
-    title: "Song Title Five",
-    artist: "Artist Name",
-  }
-]
+import { useSiteData } from '../data/siteData'
 
 function FavoriteSongs() {
+  const { songs } = useSiteData()
   const [ref, isVisible] = useScrollAnimation(0.2)
 
   return (

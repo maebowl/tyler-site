@@ -5,6 +5,8 @@
 
 .blog-post-page .section-container {
   max-width: 720px;
+  opacity: 1;
+  transform: none;
 }
 
 .back-link {

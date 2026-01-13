@@ -1,25 +1,9 @@
 import './BlenderProjects.css'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-
-const projects = [
-  {
-    id: 1,
-    title: "Project One",
-    description: "A mysterious scene rendered in cycles",
-  },
-  {
-    id: 2,
-    title: "Project Two",
-    description: "Low-poly environment design",
-  },
-  {
-    id: 3,
-    title: "Project Three",
-    description: "Character modeling experiment",
-  }
-]
+import { useSiteData } from '../data/siteData'
 
 function BlenderProjects() {
+  const { projects } = useSiteData()
   const [ref, isVisible] = useScrollAnimation(0.2)
 
   return (

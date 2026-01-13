@@ -1,18 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { useSiteData } from '../data/siteData'
 import './Blog.css'
 
-// Sample blog posts - you can replace with real content or fetch from an API
-const posts = [
-  {
-    slug: 'hello-world',
-    title: 'Hello World',
-    date: '2026-01-12',
-    excerpt: 'Welcome to my blog! This is my first post where I talk about what I plan to write about.',
-  },
-]
-
 function Blog() {
+  const { posts } = useSiteData()
   const [ref, isVisible] = useScrollAnimation(0.1)
 
   return (

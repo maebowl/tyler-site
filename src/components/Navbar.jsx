@@ -101,7 +101,7 @@ function Navbar() {
           <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
             <li><a href="#projects" onClick={(e) => scrollToSection(e, '#projects')}>Projects</a></li>
             <li><a href="#music" onClick={(e) => scrollToSection(e, '#music')}>Music</a></li>
-            <li><a href="#socials" onClick={(e) => scrollToSection(e, '#socials')}>Socials</a></li>
+            <li><a href="#socials" onClick={(e) => scrollToSection(e, '#socials')}>Contact</a></li>
             <li><Link to="/blog" onClick={closeMenu}>Blog</Link></li>
           </ul>
         </div>

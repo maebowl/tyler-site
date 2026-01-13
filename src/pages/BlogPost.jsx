@@ -1,32 +1,12 @@
 import { useParams, Link } from 'react-router-dom'
 import { useEffect } from 'react'
+import { useSiteData } from '../data/siteData'
 import './BlogPost.css'
-
-// Sample blog posts content - you can replace with real content or fetch from an API
-const postsContent = {
-  'hello-world': {
-    title: 'Hello World',
-    date: '2026-01-12',
-    content: `
-      <p>Welcome to my blog! I'm excited to finally have a space to share my thoughts and projects.</p>
-
-      <p>Here's what you can expect to find here:</p>
-
-      <ul>
-        <li>Updates on my Blender projects and 3D art</li>
-        <li>Music recommendations and playlists</li>
-        <li>Random thoughts and musings</li>
-        <li>Maybe some tutorials if I figure out something cool</li>
-      </ul>
-
-      <p>Stay tuned for more posts coming soon!</p>
-    `,
-  },
-}
 
 function BlogPost() {
   const { slug } = useParams()
-  const post = postsContent[slug]
+  const { posts } = useSiteData()
+  const post = posts.find(p => p.slug === slug)
 
   useEffect(() => {
     window.scrollTo(0, 0)
