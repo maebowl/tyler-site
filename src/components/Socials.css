@@ -1,41 +1,29 @@
 .socials {
-  padding-top: 8rem;
+  padding: 6rem 2rem;
   padding-bottom: 4rem;
-}
-
-.socials-intro {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  margin-bottom: 3rem;
-  max-width: 600px;
 }
 
 .socials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .social-card {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: var(--surface);
-  border: 2px solid var(--purple-dark);
-  border-radius: 4px;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
   text-decoration: none;
-  transition: all 0.3s ease;
-  animation: pixel-fade-in 0.5s ease-out backwards;
+  transition: background 0.2s ease, transform 0.2s ease;
+  animation: fade-in 0.5s ease-out backwards;
 }
 
 .social-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-}
-
-.social-card:hover .social-icon {
-  transform: scale(1.1);
+  background: var(--bg-tertiary);
+  transform: translateY(-2px);
 }
 
 .social-card:hover .social-arrow {
@@ -43,106 +31,53 @@
   opacity: 1;
 }
 
-/* Discord */
-.social-discord {
-  border-color: #5865F2;
-}
-
-.social-discord:hover {
-  background: rgba(88, 101, 242, 0.1);
-  box-shadow: 0 8px 30px rgba(88, 101, 242, 0.2);
-}
-
-.social-discord .social-icon-wrapper {
-  color: #5865F2;
-}
-
-.social-discord:hover .social-name {
-  color: #5865F2;
-  text-shadow: 0 0 10px rgba(88, 101, 242, 0.5);
-}
-
-/* YouTube */
-.social-youtube {
-  border-color: #FF0000;
-}
-
-.social-youtube:hover {
-  background: rgba(255, 0, 0, 0.1);
-  box-shadow: 0 8px 30px rgba(255, 0, 0, 0.2);
-}
-
-.social-youtube .social-icon-wrapper {
-  color: #FF0000;
-}
-
-.social-youtube:hover .social-name {
-  color: #FF0000;
-  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
-
-/* Twitch */
-.social-twitch {
-  border-color: #9146FF;
-}
-
-.social-twitch:hover {
-  background: rgba(145, 70, 255, 0.1);
-  box-shadow: 0 8px 30px rgba(145, 70, 255, 0.2);
-}
-
-.social-twitch .social-icon-wrapper {
-  color: #9146FF;
-}
-
-.social-twitch:hover .social-name {
-  color: #9146FF;
-  text-shadow: 0 0 10px rgba(145, 70, 255, 0.5);
-}
-
 .social-icon-wrapper {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  color: var(--accent-primary);
 }
 
 .social-icon {
-  width: 32px;
-  height: 32px;
-  transition: transform 0.3s ease;
+  width: 24px;
+  height: 24px;
 }
 
 .social-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
   min-width: 0;
 }
 
 .social-name {
-  font-family: var(--font-pixel);
-  font-size: 0.875rem;
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 0.25rem;
-  transition: all 0.3s ease;
 }
 
-.social-description {
-  font-family: var(--font-terminal);
-  font-size: 1.1rem;
-  color: var(--text-secondary);
+.social-handle {
+  font-size: 0.875rem;
+  color: var(--text-dim);
 }
 
 .social-arrow {
-  font-family: var(--font-terminal);
-  font-size: 1.5rem;
+  width: 20px;
+  height: 20px;
   color: var(--text-dim);
   opacity: 0.5;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 @media (max-width: 768px) {
+  .socials {
+    padding: 4rem 1.5rem;
+  }
+
   .socials-grid {
     grid-template-columns: 1fr;
   }

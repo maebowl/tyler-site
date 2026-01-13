@@ -10,16 +10,13 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-content">
         <a href="#" className="nav-logo" onClick={closeMenu}>
-          <span className="logo-bracket">[</span>
-          <span className="logo-text">TR</span>
-          <span className="logo-bracket">]</span>
+          TR
         </a>
         <button
           className={`menu-toggle ${menuOpen ? 'open' : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
-          <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
         </button>

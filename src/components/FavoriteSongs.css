@@ -1,12 +1,5 @@
 .music {
-  padding-top: 8rem;
-}
-
-.music-intro {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  margin-bottom: 3rem;
-  max-width: 600px;
+  padding: 6rem 2rem;
 }
 
 .song-list {
@@ -18,119 +11,46 @@
 .song-item {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1rem 1.5rem;
-  background: var(--surface);
-  border: 1px solid transparent;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  animation: pixel-fade-in 0.4s ease-out backwards;
+  gap: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  animation: fade-in 0.4s ease-out backwards;
 }
 
 .song-item:hover {
-  background: var(--surface-hover);
-  border-color: var(--purple-dark);
-  transform: translateX(8px);
-}
-
-.song-item:hover .song-visualizer .bar {
-  animation-play-state: running;
-}
-
-.song-item:hover .song-title {
-  color: var(--amber);
+  background: var(--bg-tertiary);
 }
 
 .song-number {
-  font-family: var(--font-terminal);
-  font-size: 1.25rem;
+  font-size: 0.875rem;
   color: var(--text-dim);
-  min-width: 2rem;
-}
-
-.song-visualizer {
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  height: 20px;
-  min-width: 30px;
-}
-
-.song-visualizer .bar {
-  width: 4px;
-  background: var(--purple-light);
-  border-radius: 1px;
-  animation: equalizer 0.5s ease-in-out infinite;
-  animation-play-state: paused;
-}
-
-.song-visualizer .bar:nth-child(1) {
-  height: 8px;
-  animation-delay: 0s;
-}
-
-.song-visualizer .bar:nth-child(2) {
-  height: 16px;
-  animation-delay: 0.1s;
-}
-
-.song-visualizer .bar:nth-child(3) {
-  height: 12px;
-  animation-delay: 0.2s;
-}
-
-.song-visualizer .bar:nth-child(4) {
-  height: 18px;
-  animation-delay: 0.3s;
-}
-
-@keyframes equalizer {
-  0%, 100% {
-    transform: scaleY(0.5);
-  }
-  50% {
-    transform: scaleY(1);
-  }
+  min-width: 1.5rem;
+  font-weight: 500;
 }
 
 .song-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
   min-width: 0;
 }
 
 .song-title {
-  font-family: var(--font-terminal);
-  font-size: 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--text-primary);
-  transition: color 0.2s ease;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .song-artist {
-  font-size: 1rem;
-  color: var(--text-secondary);
-}
-
-.song-note {
-  font-family: var(--font-terminal);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   color: var(--text-dim);
-  background: var(--bg-tertiary);
-  padding: 0.25rem 0.75rem;
-  border-radius: 2px;
-  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
-  .song-item {
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .song-note {
-    width: 100%;
-    margin-left: 3.5rem;
+  .music {
+    padding: 4rem 1.5rem;
   }
 }

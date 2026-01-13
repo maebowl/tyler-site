@@ -4,7 +4,7 @@ const socials = [
   {
     id: 'discord',
     name: 'Discord',
-    description: 'Join the server or add me',
+    handle: '@tyler',
     url: '#',
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="social-icon">
@@ -15,7 +15,7 @@ const socials = [
   {
     id: 'youtube',
     name: 'YouTube',
-    description: 'Watch my content',
+    handle: 'Tyler Richardson',
     url: '#',
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="social-icon">
@@ -26,7 +26,7 @@ const socials = [
   {
     id: 'twitch',
     name: 'Twitch',
-    description: 'Catch me live',
+    handle: 'tyler_streams',
     url: '#',
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="social-icon">
@@ -39,30 +39,34 @@ const socials = [
 function Socials() {
   return (
     <section id="socials" className="socials">
-      <h2 className="section-title">Socials</h2>
-      <p className="socials-intro">
-        Come hang out, talk retro games, or watch me fail at whatever I'm doing.
-      </p>
-      <div className="socials-grid">
-        {socials.map((social, index) => (
-          <a
-            key={social.id}
-            href={social.url}
-            className={`social-card social-${social.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <div className="social-icon-wrapper">
-              {social.icon}
-            </div>
-            <div className="social-info">
-              <h3 className="social-name">{social.name}</h3>
-              <p className="social-description">{social.description}</p>
-            </div>
-            <div className="social-arrow">-&gt;</div>
-          </a>
-        ))}
+      <div className="section-container">
+        <h2 className="section-title">Socials</h2>
+        <p className="section-intro">
+          Come hang out, talk retro games, or watch me fail at whatever I'm doing.
+        </p>
+        <div className="socials-grid">
+          {socials.map((social, index) => (
+            <a
+              key={social.id}
+              href={social.url}
+              className={`social-card social-${social.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="social-icon-wrapper">
+                {social.icon}
+              </div>
+              <div className="social-info">
+                <span className="social-name">{social.name}</span>
+                <span className="social-handle">{social.handle}</span>
+              </div>
+              <svg className="social-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   )
