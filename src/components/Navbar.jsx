@@ -37,6 +37,37 @@ function Navbar() {
 
   const closeMenu = () => setMenuOpen(false)
 
+  const scrollToSection = (e, sectionId) => {
+    e.preventDefault()
+    closeMenu()
+
+    const section = document.querySelector(sectionId)
+    if (section) {
+      const offset = 20 // Small offset from top after navbar hides
+      const targetPosition = section.getBoundingClientRect().top + window.scrollY - offset
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      })
+
+      // Hide navbar after scroll starts
+      setTimeout(() => {
+        setHidden(true)
+        setLastScrollY(targetPosition)
+      }, 100)
+    }
+  }
+
+  const scrollToTop = (e) => {
+    e.preventDefault()
+    closeMenu()
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <>
       <div
@@ -45,7 +76,7 @@ function Navbar() {
       />
       <nav className={`navbar ${hidden ? 'navbar-hidden' : ''}`}>
         <div className="navbar-content">
-          <a href="#" className="nav-logo" onClick={closeMenu}>
+          <a href="#" className="nav-logo" onClick={scrollToTop}>
             TR
           </a>
           <button
@@ -57,9 +88,9 @@ function Navbar() {
             <span className="bar"></span>
           </button>
           <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-            <li><a href="#projects" onClick={closeMenu}>Projects</a></li>
-            <li><a href="#music" onClick={closeMenu}>Music</a></li>
-            <li><a href="#socials" onClick={closeMenu}>Socials</a></li>
+            <li><a href="#projects" onClick={(e) => scrollToSection(e, '#projects')}>Projects</a></li>
+            <li><a href="#music" onClick={(e) => scrollToSection(e, '#music')}>Music</a></li>
+            <li><a href="#socials" onClick={(e) => scrollToSection(e, '#socials')}>Socials</a></li>
           </ul>
         </div>
       </nav>
