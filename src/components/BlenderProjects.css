@@ -1,0 +1,141 @@
+.projects {
+  padding-top: 8rem;
+}
+
+.projects-intro {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+  max-width: 600px;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--purple-dark);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: pixel-fade-in 0.5s ease-out backwards;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--purple-mid);
+  box-shadow:
+    0 8px 30px rgba(45, 27, 78, 0.4),
+    0 0 20px rgba(74, 44, 122, 0.2);
+}
+
+.project-image {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: var(--bg-tertiary);
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-image img {
+  transform: scale(1.05);
+}
+
+.placeholder-art {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background:
+    linear-gradient(135deg, var(--bg-tertiary) 0%, var(--purple-dark) 100%);
+}
+
+.placeholder-icon {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.cube-face {
+  position: absolute;
+  border: 2px solid var(--purple-light);
+}
+
+.cube-face.top {
+  width: 40px;
+  height: 20px;
+  top: 0;
+  left: 10px;
+  transform: skewX(-45deg);
+  background: rgba(123, 79, 162, 0.2);
+}
+
+.cube-face.front {
+  width: 30px;
+  height: 35px;
+  top: 18px;
+  left: 0;
+  background: rgba(74, 44, 122, 0.3);
+}
+
+.cube-face.side {
+  width: 30px;
+  height: 35px;
+  top: 18px;
+  left: 28px;
+  transform: skewY(-45deg);
+  background: rgba(45, 27, 78, 0.4);
+}
+
+.placeholder-text {
+  font-family: var(--font-terminal);
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+.project-info {
+  padding: 1.5rem;
+}
+
+.project-title {
+  font-family: var(--font-pixel);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.project-description {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.projects-note {
+  font-family: var(--font-terminal);
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.note-icon {
+  color: var(--purple-light);
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
