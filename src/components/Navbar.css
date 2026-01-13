@@ -126,7 +126,7 @@
     right: -100%;
     width: 70%;
     max-width: 300px;
-    height: 100vh;
+    height: 100dvh;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -134,6 +134,8 @@
     background: var(--bg-secondary);
     border-left: 1px solid var(--purple-dark);
     transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
   }
 
   .nav-links.open {
