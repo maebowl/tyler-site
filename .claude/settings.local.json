@@ -12,7 +12,13 @@
       "Bash(git remote add:*)",
       "Bash(git branch:*)",
       "Bash(git push:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(git stash pop:*)",
+      "Bash(git fetch:*)",
+      "Bash(node -c:*)",
+      "Bash(npx eslint:*)"
     ]
   }
 }

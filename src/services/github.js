@@ -84,19 +84,31 @@ const SiteDataContext = createContext()
 
 export function SiteDataProvider({ children }) {
   const [data, setData] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved) {
-      try {
-        return JSON.parse(saved)
-      } catch {
-        return defaultData
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const saved = localStorage.getItem(STORAGE_KEY)
+        if (saved) {
+          const parsed = JSON.parse(saved)
+          // Validate that parsed data has expected structure
+          if (parsed && parsed.projects && parsed.songs && parsed.posts && parsed.socials) {
+            return parsed
+          }
+        }
       }
+    } catch (e) {
+      console.error('Failed to load site data from localStorage:', e)
     }
     return defaultData
   })
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+      }
+    } catch (e) {
+      console.error('Failed to save site data to localStorage:', e)
+    }
   }, [data])
 
   const updateProjects = (projects) => setData(prev => ({ ...prev, projects }))
