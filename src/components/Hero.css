@@ -122,6 +122,11 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .hero-content {
     flex-direction: column;
     text-align: center;
@@ -133,11 +138,17 @@
   }
 
   .hero-terminal {
-    justify-content: center;
+    display: none;
   }
 
   .hero-description {
     text-align: center;
+  }
+
+  .scroll-indicator {
+    width: 100%;
+    left: 0;
+    transform: none;
   }
 
   .oneshot-sun {
