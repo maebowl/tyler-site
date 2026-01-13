@@ -3,18 +3,14 @@ import { useEffect, useRef, useState } from 'react'
 export function useScrollAnimation(threshold = 0.1) {
   const ref = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
-  const lastScrollY = useRef(0)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const currentScrollY = window.scrollY
-        const isScrollingDown = currentScrollY > lastScrollY.current
-        lastScrollY.current = currentScrollY
-
-        if (entry.isIntersecting && isScrollingDown) {
+        if (entry.isIntersecting) {
           setIsVisible(true)
-        } else if (!entry.isIntersecting) {
+        } else if (entry.boundingClientRect.top > 0) {
+          // Element is below viewport (user scrolled up past it)
           setIsVisible(false)
         }
       },
