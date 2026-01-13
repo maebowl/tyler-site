@@ -1,4 +1,5 @@
 import './BlenderProjects.css'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 const projects = [
   {
@@ -19,9 +20,11 @@ const projects = [
 ]
 
 function BlenderProjects() {
+  const [ref, isVisible] = useScrollAnimation(0.2)
+
   return (
     <section id="projects" className="projects">
-      <div className="section-container">
+      <div ref={ref} className={`section-container ${isVisible ? 'animate-in' : ''}`}>
         <h2 className="section-title">Blender Projects</h2>
         <p className="section-intro">
           Yes, I've made the donut. No, I won't stop there.
@@ -31,7 +34,7 @@ function BlenderProjects() {
             <article
               key={project.id}
               className="project-card"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              style={{ transitionDelay: `${index * 0.1}s` }}
             >
               <div className="project-image">
                 <div className="placeholder-art">

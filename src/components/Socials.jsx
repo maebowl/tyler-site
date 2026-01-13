@@ -1,4 +1,5 @@
 import './Socials.css'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 const socials = [
   {
@@ -37,9 +38,11 @@ const socials = [
 ]
 
 function Socials() {
+  const [ref, isVisible] = useScrollAnimation(0.2)
+
   return (
     <section id="socials" className="socials">
-      <div className="section-container">
+      <div ref={ref} className={`section-container ${isVisible ? 'animate-in' : ''}`}>
         <h2 className="section-title">Socials</h2>
         <p className="section-intro">
           Come hang out, talk retro games, or watch me fail at whatever I'm doing.
@@ -52,7 +55,7 @@ function Socials() {
               className={`social-card social-${social.id}`}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              style={{ transitionDelay: `${index * 0.1}s` }}
             >
               <div className="social-icon-wrapper">
                 {social.icon}

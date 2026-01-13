@@ -17,8 +17,14 @@
   background: var(--bg-secondary);
   border-radius: 12px;
   text-decoration: none;
-  transition: background 0.2s ease, transform 0.2s ease;
-  animation: fade-in 0.5s ease-out backwards;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, background 0.2s ease;
+}
+
+.section-container.animate-in .social-card {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .social-card:hover {

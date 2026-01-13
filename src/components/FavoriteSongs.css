@@ -15,8 +15,14 @@
   padding: 1rem 1.25rem;
   background: var(--bg-secondary);
   border-radius: 8px;
-  transition: background 0.2s ease;
-  animation: fade-in 0.4s ease-out backwards;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.2s ease;
+}
+
+.section-container.animate-in .song-item {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .song-item:hover {

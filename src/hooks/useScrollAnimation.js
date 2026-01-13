@@ -1,0 +1,37 @@
+import { useEffect, useRef, useState } from 'react'
+
+export function useScrollAnimation(threshold = 0.1) {
+  const ref = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const currentScrollY = window.scrollY
+        const isScrollingDown = currentScrollY > lastScrollY.current
+        lastScrollY.current = currentScrollY
+
+        if (entry.isIntersecting && isScrollingDown) {
+          setIsVisible(true)
+        } else if (!entry.isIntersecting) {
+          setIsVisible(false)
+        }
+      },
+      { threshold }
+    )
+
+    const current = ref.current
+    if (current) {
+      observer.observe(current)
+    }
+
+    return () => {
+      if (current) {
+        observer.unobserve(current)
+      }
+    }
+  }, [threshold])
+
+  return [ref, isVisible]
+}

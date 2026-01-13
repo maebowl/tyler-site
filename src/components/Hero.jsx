@@ -7,17 +7,12 @@ function Hero() {
         <div className="hero-text">
           <p className="hero-greeting">Hey, I'm</p>
           <h1 className="hero-title">Tyler Richardson</h1>
-          <p className="hero-subtitle">
-            Drummer, Ryo-in-training, retro gaming enthusiast
-          </p>
-          <p className="hero-description">
-            DougDoug enjoyer, Nintendo collector, and proud owner of a DougDoug mug mug.
-            Currently learning bass and perfecting my Dick Vitale's Awesome Baby College Hoops skills.
-          </p>
         </div>
       </div>
       <div className="scroll-indicator">
-        <span className="scroll-line"></span>
+        <svg className="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
       </div>
     </section>
   )

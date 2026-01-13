@@ -52,24 +52,33 @@
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: bounce 2s ease-in-out infinite;
 }
 
-.scroll-line {
-  display: block;
-  width: 1px;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--accent-primary), transparent);
-  animation: scroll-pulse 2s ease-in-out infinite;
+.scroll-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-@keyframes scroll-pulse {
+.scroll-arrow {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-primary);
+}
+
+@keyframes bounce {
   0%, 100% {
-    opacity: 0.3;
-    transform: scaleY(0.8);
+    transform: translateX(-50%) translateY(0);
   }
   50% {
-    opacity: 1;
-    transform: scaleY(1);
+    transform: translateX(-50%) translateY(8px);
   }
 }
 

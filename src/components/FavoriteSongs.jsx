@@ -1,4 +1,5 @@
 import './FavoriteSongs.css'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 const songs = [
   {
@@ -29,9 +30,11 @@ const songs = [
 ]
 
 function FavoriteSongs() {
+  const [ref, isVisible] = useScrollAnimation(0.2)
+
   return (
     <section id="music" className="music">
-      <div className="section-container">
+      <div ref={ref} className={`section-container ${isVisible ? 'animate-in' : ''}`}>
         <h2 className="section-title">Favorite Songs</h2>
         <p className="section-intro">
           What's on rotation while I'm drumming, gaming, or pretending to practice bass.
@@ -41,7 +44,7 @@ function FavoriteSongs() {
             <div
               key={song.id}
               className="song-item"
-              style={{ animationDelay: `${index * 0.05}s` }}
+              style={{ transitionDelay: `${index * 0.05}s` }}
             >
               <span className="song-number">{String(index + 1).padStart(2, '0')}</span>
               <div className="song-info">
