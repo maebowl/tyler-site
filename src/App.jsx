@@ -18,6 +18,14 @@ function App() {
       <footer className="footer">
         <div className="footer-content">
           <p className="footer-copyright">Tyler Richardson {new Date().getFullYear()}</p>
+          <a
+            href="https://github.com/maebowl/tyler-site"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-source"
+          >
+            Source
+          </a>
         </div>
       </footer>
     </div>
