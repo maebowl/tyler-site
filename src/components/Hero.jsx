@@ -27,7 +27,7 @@ function Hero() {
     <section id="about" className="hero">
       <div className="hero-content">
         <div className="hero-text">
-          <p className="hero-greeting">Hey, I'm</p>
+          <p className="hero-greeting">Hi, I'm</p>
           <h1 className="hero-title">Tyler Richardson</h1>
         </div>
       </div>
