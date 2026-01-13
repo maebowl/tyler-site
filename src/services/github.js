@@ -1,6 +1,17 @@
 const GITHUB_REPO = 'maebowl/tyler-site'
 const DATA_FILE_PATH = 'src/data/siteData.jsx'
 
+// Helper to properly encode UTF-8 to base64
+function utf8ToBase64(str) {
+  const encoder = new TextEncoder()
+  const bytes = encoder.encode(str)
+  let binary = ''
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i])
+  }
+  return btoa(binary)
+}
+
 export async function saveToGitHub(data, token) {
   if (!token) {
     throw new Error('GitHub token is required')
@@ -11,14 +22,15 @@ export async function saveToGitHub(data, token) {
     `https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILE_PATH}`,
     {
       headers: {
-        Authorization: `token ${token}`,
+        Authorization: `Bearer ${token}`,
         Accept: 'application/vnd.github.v3+json',
       },
     }
   )
 
   if (!fileResponse.ok) {
-    throw new Error('Failed to fetch current file from GitHub')
+    const errorData = await fileResponse.json().catch(() => ({}))
+    throw new Error(errorData.message || `Failed to fetch file: ${fileResponse.status}`)
   }
 
   const fileData = await fileResponse.json()
@@ -26,7 +38,7 @@ export async function saveToGitHub(data, token) {
 
   // Generate the new file content
   const newContent = generateSiteDataFile(data)
-  const encodedContent = btoa(unescape(encodeURIComponent(newContent)))
+  const encodedContent = utf8ToBase64(newContent)
 
   // Commit the changes
   const updateResponse = await fetch(
@@ -34,7 +46,7 @@ export async function saveToGitHub(data, token) {
     {
       method: 'PUT',
       headers: {
-        Authorization: `token ${token}`,
+        Authorization: `Bearer ${token}`,
         Accept: 'application/vnd.github.v3+json',
         'Content-Type': 'application/json',
       },
