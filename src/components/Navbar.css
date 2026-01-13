@@ -1,3 +1,20 @@
+/* Mobile menu overlay */
+.menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 999;
+}
+
+.menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
 .navbar {
   position: fixed;
   top: 0;
@@ -85,6 +102,10 @@
 }
 
 @media (max-width: 768px) {
+  .menu-overlay {
+    display: block;
+  }
+
   .navbar {
     padding: 1rem 1.5rem;
     background: rgba(27, 27, 35, 0.95);

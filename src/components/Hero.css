@@ -87,6 +87,7 @@
 @media (max-width: 768px) {
   .hero {
     padding: 4rem 1.5rem;
+    min-height: 100dvh;
   }
 
   .hero-title {
@@ -99,5 +100,14 @@
 
   .hero-description {
     font-size: 1rem;
+  }
+
+  .scroll-indicator {
+    bottom: 1.5rem;
+  }
+
+  .scroll-arrow {
+    width: 18px;
+    height: 18px;
   }
 }
