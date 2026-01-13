@@ -69,9 +69,7 @@ export async function saveToGitHub(data, token) {
 function generateSiteDataFile(data) {
   const { projects, songs, posts, socials } = data
 
-  return `import { createContext, useContext, useState, useEffect } from 'react'
-
-const STORAGE_KEY = 'tyler-site-data'
+  return `import { createContext, useContext, useState } from 'react'
 
 const defaultData = {
   projects: ${JSON.stringify(projects, null, 4).replace(/^/gm, '  ').trim()},
@@ -83,33 +81,7 @@ const defaultData = {
 const SiteDataContext = createContext()
 
 export function SiteDataProvider({ children }) {
-  const [data, setData] = useState(() => {
-    try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        const saved = localStorage.getItem(STORAGE_KEY)
-        if (saved) {
-          const parsed = JSON.parse(saved)
-          // Validate that parsed data has expected structure
-          if (parsed && parsed.projects && parsed.songs && parsed.posts && parsed.socials) {
-            return parsed
-          }
-        }
-      }
-    } catch (e) {
-      console.error('Failed to load site data from localStorage:', e)
-    }
-    return defaultData
-  })
-
-  useEffect(() => {
-    try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-      }
-    } catch (e) {
-      console.error('Failed to save site data to localStorage:', e)
-    }
-  }, [data])
+  const [data, setData] = useState(defaultData)
 
   const updateProjects = (projects) => setData(prev => ({ ...prev, projects }))
   const updateSongs = (songs) => setData(prev => ({ ...prev, songs }))
