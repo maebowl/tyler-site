@@ -54,6 +54,13 @@ const defaultData = {
           "date": "2026-01-12",
           "excerpt": "Welcome to my blog! This is my first post where I talk about what I plan to write about.",
           "content": "<p>Welcome to my blog! I'm excited to finally have a space to share my thoughts and projects.</p>\n<p>Here's what you can expect to find here:</p>\n<ul>\n  <li>Updates on my Blender projects and 3D art</li>\n  <li>Music recommendations and playlists</li>\n  <li>Random thoughts and musings</li>\n  <li>Maybe some tutorials if I figure out something cool</li>\n</ul>\n<p>Stay tuned for more posts coming soon!</p>"
+      },
+      {
+          "slug": "this-is-a-test",
+          "title": "wowza",
+          "date": "2026-01-13",
+          "excerpt": "jeepers",
+          "content": "mugmug"
       }
   ],
   socials: [
