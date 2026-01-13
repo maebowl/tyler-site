@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react'
 import { useSiteData } from '../data/siteData'
+import { saveToGitHub } from '../services/github'
 import './Admin.css'
 
 const ADMIN_PASSWORD = 'ilovelegobatman'
 const AUTH_KEY = 'tyler-admin-auth'
+const GITHUB_TOKEN_KEY = 'tyler-github-token'
 
 function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState('posts')
+  const [githubToken, setGithubToken] = useState('')
+  const [showTokenInput, setShowTokenInput] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [saveStatus, setSaveStatus] = useState('')
 
   const {
     projects, songs, posts, socials,
@@ -23,6 +29,10 @@ function Admin() {
     const auth = sessionStorage.getItem(AUTH_KEY)
     if (auth === 'true') {
       setIsAuthenticated(true)
+    }
+    const savedToken = localStorage.getItem(GITHUB_TOKEN_KEY)
+    if (savedToken) {
+      setGithubToken(savedToken)
     }
   }, [])
 
@@ -40,6 +50,33 @@ function Admin() {
   const handleLogout = () => {
     setIsAuthenticated(false)
     sessionStorage.removeItem(AUTH_KEY)
+  }
+
+  const handleSaveToken = () => {
+    localStorage.setItem(GITHUB_TOKEN_KEY, githubToken)
+    setShowTokenInput(false)
+    setSaveStatus('Token saved!')
+    setTimeout(() => setSaveStatus(''), 3000)
+  }
+
+  const handleSaveToGitHub = async () => {
+    if (!githubToken) {
+      setShowTokenInput(true)
+      return
+    }
+
+    setSaving(true)
+    setSaveStatus('')
+
+    try {
+      await saveToGitHub({ projects, songs, posts, socials }, githubToken)
+      setSaveStatus('Saved to GitHub! Site will rebuild shortly.')
+    } catch (err) {
+      setSaveStatus(`Error: ${err.message}`)
+    } finally {
+      setSaving(false)
+      setTimeout(() => setSaveStatus(''), 5000)
+    }
   }
 
   if (!isAuthenticated) {
@@ -69,10 +106,41 @@ function Admin() {
         <div className="admin-header">
           <h1>Admin Dashboard</h1>
           <div className="admin-actions">
+            <button
+              onClick={handleSaveToGitHub}
+              className="btn-primary"
+              disabled={saving}
+            >
+              {saving ? 'Saving...' : 'Save to GitHub'}
+            </button>
+            <button onClick={() => setShowTokenInput(!showTokenInput)} className="btn-secondary">
+              {githubToken ? 'Change Token' : 'Set Token'}
+            </button>
             <button onClick={resetToDefaults} className="btn-secondary">Reset to Defaults</button>
             <button onClick={handleLogout} className="btn-secondary">Logout</button>
           </div>
         </div>
+
+        {showTokenInput && (
+          <div className="token-input-section">
+            <p>Enter your GitHub Personal Access Token (needs repo scope):</p>
+            <div className="token-input-row">
+              <input
+                type="password"
+                value={githubToken}
+                onChange={(e) => setGithubToken(e.target.value)}
+                placeholder="ghp_xxxxxxxxxxxx"
+              />
+              <button onClick={handleSaveToken}>Save Token</button>
+            </div>
+          </div>
+        )}
+
+        {saveStatus && (
+          <div className={`save-status ${saveStatus.includes('Error') ? 'error' : 'success'}`}>
+            {saveStatus}
+          </div>
+        )}
 
         <div className="admin-tabs">
           <button

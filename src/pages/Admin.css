@@ -285,6 +285,93 @@
   background: #b71c1c !important;
 }
 
+.btn-primary {
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.token-input-section {
+  background: var(--bg-secondary);
+  padding: 1.25rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.token-input-section p {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  margin-bottom: 0.75rem;
+}
+
+.token-input-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.token-input-row input {
+  flex: 1;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.9375rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 6px;
+  color: var(--text-primary);
+}
+
+.token-input-row input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.token-input-row button {
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.token-input-row button:hover {
+  background: var(--accent-hover);
+}
+
+.save-status {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9375rem;
+}
+
+.save-status.success {
+  background: rgba(76, 175, 80, 0.2);
+  color: #81c784;
+}
+
+.save-status.error {
+  background: rgba(244, 67, 54, 0.2);
+  color: #e57373;
+}
+
 @media (max-width: 768px) {
   .admin-page {
     padding: 5rem 1rem;
