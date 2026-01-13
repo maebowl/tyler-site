@@ -1,19 +1,20 @@
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
-import Hero from './components/Hero'
-import BlenderProjects from './components/BlenderProjects'
-import FavoriteSongs from './components/FavoriteSongs'
-import Socials from './components/Socials'
 import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import Blog from './pages/Blog'
+import BlogPost from './pages/BlogPost'
 
 function App() {
   return (
     <div className="app">
       <Navbar />
       <main>
-        <Hero />
-        <BlenderProjects />
-        <FavoriteSongs />
-        <Socials />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+        </Routes>
       </main>
       <footer className="footer">
         <div className="footer-content">

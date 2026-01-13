@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import './Navbar.css'
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
+  const location = useLocation()
+  const isHome = location.pathname === '/'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +44,12 @@ function Navbar() {
     e.preventDefault()
     closeMenu()
 
+    // If not on home page, navigate there first
+    if (!isHome) {
+      window.location.href = `/${sectionId}`
+      return
+    }
+
     const section = document.querySelector(sectionId)
     if (section) {
       const offset = 20 // Small offset from top after navbar hides
@@ -59,13 +68,15 @@ function Navbar() {
     }
   }
 
-  const scrollToTop = (e) => {
-    e.preventDefault()
+  const handleLogoClick = (e) => {
     closeMenu()
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
+    if (isHome) {
+      e.preventDefault()
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    }
   }
 
   return (
@@ -76,9 +87,9 @@ function Navbar() {
       />
       <nav className={`navbar ${hidden ? 'navbar-hidden' : ''}`}>
         <div className="navbar-content">
-          <a href="#" className="nav-logo" onClick={scrollToTop}>
+          <Link to="/" className="nav-logo" onClick={handleLogoClick}>
             TR
-          </a>
+          </Link>
           <button
             className={`menu-toggle ${menuOpen ? 'open' : ''}`}
             onClick={() => setMenuOpen(!menuOpen)}
@@ -91,6 +102,7 @@ function Navbar() {
             <li><a href="#projects" onClick={(e) => scrollToSection(e, '#projects')}>Projects</a></li>
             <li><a href="#music" onClick={(e) => scrollToSection(e, '#music')}>Music</a></li>
             <li><a href="#socials" onClick={(e) => scrollToSection(e, '#socials')}>Socials</a></li>
+            <li><Link to="/blog" onClick={closeMenu}>Blog</Link></li>
           </ul>
         </div>
       </nav>
