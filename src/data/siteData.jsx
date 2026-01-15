@@ -30,27 +30,32 @@ const defaultData = {
       {
           "id": 1,
           "title": "Song Title One",
-          "artist": "Artist Name"
+          "artist": "Artist Name",
+          "youtubeUrl": ""
       },
       {
           "id": 2,
           "title": "Song Title Two",
-          "artist": "Artist Name"
+          "artist": "Artist Name",
+          "youtubeUrl": ""
       },
       {
           "id": 3,
           "title": "Song Title Three",
-          "artist": "Artist Name"
+          "artist": "Artist Name",
+          "youtubeUrl": ""
       },
       {
           "id": 4,
           "title": "Song Title Four",
-          "artist": "Artist Name"
+          "artist": "Artist Name",
+          "youtubeUrl": ""
       },
       {
           "id": 5,
           "title": "Song Title Five",
-          "artist": "Artist Name"
+          "artist": "Artist Name",
+          "youtubeUrl": ""
       }
   ],
   posts: [

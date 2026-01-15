@@ -456,12 +456,12 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject })
 
 function SongsManager({ songs, addSong, updateSong, deleteSong }) {
   const [editing, setEditing] = useState(null)
-  const [newSong, setNewSong] = useState({ title: '', artist: '' })
+  const [newSong, setNewSong] = useState({ title: '', artist: '', youtubeUrl: '' })
 
   const handleAdd = () => {
     if (!newSong.title || !newSong.artist) return
     addSong(newSong)
-    setNewSong({ title: '', artist: '' })
+    setNewSong({ title: '', artist: '', youtubeUrl: '' })
   }
 
   const handleUpdate = (id) => {
@@ -485,6 +485,11 @@ function SongsManager({ songs, addSong, updateSong, deleteSong }) {
           value={newSong.artist}
           onChange={(e) => setNewSong({ ...newSong, artist: e.target.value })}
         />
+        <input
+          placeholder="YouTube Music Video URL (optional)"
+          value={newSong.youtubeUrl}
+          onChange={(e) => setNewSong({ ...newSong, youtubeUrl: e.target.value })}
+        />
         <button onClick={handleAdd}>Add Song</button>
       </div>
 
@@ -496,10 +501,17 @@ function SongsManager({ songs, addSong, updateSong, deleteSong }) {
                 <input
                   value={editing.title}
                   onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                  placeholder="Title"
                 />
                 <input
                   value={editing.artist}
                   onChange={(e) => setEditing({ ...editing, artist: e.target.value })}
+                  placeholder="Artist"
+                />
+                <input
+                  value={editing.youtubeUrl || ''}
+                  onChange={(e) => setEditing({ ...editing, youtubeUrl: e.target.value })}
+                  placeholder="YouTube URL (optional)"
                 />
                 <div className="item-actions">
                   <button onClick={() => handleUpdate(song.id)}>Save</button>
@@ -511,6 +523,7 @@ function SongsManager({ songs, addSong, updateSong, deleteSong }) {
                 <div className="item-info">
                   <strong>{song.title}</strong>
                   <span className="item-meta">{song.artist}</span>
+                  {song.youtubeUrl && <span className="item-meta item-url">{song.youtubeUrl}</span>}
                 </div>
                 <div className="item-actions">
                   <button onClick={() => setEditing({ ...song })}>Edit</button>
