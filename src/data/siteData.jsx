@@ -1,14 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 
 const defaultData = {
-  videos: [
-      {
-          "id": 1,
-          "title": "Sample Video",
-          "subtitle": "A cool video description",
-          "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-      }
-  ],
   projects: [
       {
           "id": 1,
@@ -58,22 +50,7 @@ const defaultData = {
           "youtubeUrl": ""
       }
   ],
-  posts: [
-      {
-          "slug": "hello-world",
-          "title": "Hello World",
-          "date": "2026-01-12",
-          "excerpt": "Welcome to my blog! This is my first post where I talk about what I plan to write about.",
-          "content": "<p>Welcome to my blog! I'm excited to finally have a space to share my thoughts and projects.</p>\n<p>Here's what you can expect to find here:</p>\n<ul>\n  <li>Updates on my Blender projects and 3D art</li>\n  <li>Music recommendations and playlists</li>\n  <li>Random thoughts and musings</li>\n  <li>Maybe some tutorials if I figure out something cool</li>\n</ul>\n<p>Stay tuned for more posts coming soon!</p>"
-      },
-      {
-          "slug": "this-is-a-test",
-          "title": "wowza",
-          "date": "2026-01-13",
-          "excerpt": "jeepers",
-          "content": "mugmug"
-      }
-  ],
+  posts: [],
   socials: [
       {
           "id": "discord",
@@ -107,27 +84,10 @@ const SiteDataContext = createContext()
 export function SiteDataProvider({ children }) {
   const [data, setData] = useState(defaultData)
 
-  const updateVideos = (videos) => setData(prev => ({ ...prev, videos }))
   const updateProjects = (projects) => setData(prev => ({ ...prev, projects }))
   const updateSongs = (songs) => setData(prev => ({ ...prev, songs }))
   const updatePosts = (posts) => setData(prev => ({ ...prev, posts }))
   const updateSocials = (socials) => setData(prev => ({ ...prev, socials }))
-
-  const addVideo = (video) => {
-    const id = Math.max(0, ...data.videos.map(v => v.id)) + 1
-    setData(prev => ({ ...prev, videos: [...prev.videos, { ...video, id }] }))
-  }
-
-  const updateVideo = (id, updates) => {
-    setData(prev => ({
-      ...prev,
-      videos: prev.videos.map(v => v.id === id ? { ...v, ...updates } : v)
-    }))
-  }
-
-  const deleteVideo = (id) => {
-    setData(prev => ({ ...prev, videos: prev.videos.filter(v => v.id !== id) }))
-  }
 
   const addProject = (project) => {
     const id = Math.max(0, ...data.projects.map(p => p.id)) + 1
@@ -190,14 +150,10 @@ export function SiteDataProvider({ children }) {
   return (
     <SiteDataContext.Provider value={{
       ...data,
-      updateVideos,
       updateProjects,
       updateSongs,
       updatePosts,
       updateSocials,
-      addVideo,
-      updateVideo,
-      deleteVideo,
       addProject,
       updateProject,
       deleteProject,
