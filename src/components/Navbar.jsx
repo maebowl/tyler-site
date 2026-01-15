@@ -40,34 +40,6 @@ function Navbar() {
 
   const closeMenu = () => setMenuOpen(false)
 
-  const scrollToSection = (e, sectionId) => {
-    e.preventDefault()
-    closeMenu()
-
-    // If not on home page, navigate there first
-    if (!isHome) {
-      window.location.href = `/${sectionId}`
-      return
-    }
-
-    const section = document.querySelector(sectionId)
-    if (section) {
-      const offset = 20 // Small offset from top after navbar hides
-      const targetPosition = section.getBoundingClientRect().top + window.scrollY - offset
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      })
-
-      // Hide navbar after scroll starts
-      setTimeout(() => {
-        setHidden(true)
-        setLastScrollY(targetPosition)
-      }, 100)
-    }
-  }
-
   const handleLogoClick = (e) => {
     closeMenu()
     if (isHome) {
@@ -99,9 +71,9 @@ function Navbar() {
             <span className="bar"></span>
           </button>
           <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-            <li><a href="#projects" onClick={(e) => scrollToSection(e, '#projects')}>Projects</a></li>
-            <li><a href="#music" onClick={(e) => scrollToSection(e, '#music')}>Music</a></li>
-            <li><a href="#socials" onClick={(e) => scrollToSection(e, '#socials')}>Contact</a></li>
+            <li><Link to="/projects" onClick={closeMenu}>Projects</Link></li>
+            <li><Link to="/music" onClick={closeMenu}>Music</Link></li>
+            <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>
             <li><Link to="/blog" onClick={closeMenu}>Blog</Link></li>
           </ul>
         </div>
