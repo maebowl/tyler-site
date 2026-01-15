@@ -18,7 +18,8 @@ function Admin() {
   const [saveStatus, setSaveStatus] = useState('')
 
   const {
-    projects, songs, posts, socials,
+    videos, projects, songs, posts, socials,
+    addVideo, updateVideo, deleteVideo,
     addProject, updateProject, deleteProject,
     addSong, updateSong, deleteSong,
     addPost, updatePost, deletePost,
@@ -69,7 +70,7 @@ function Admin() {
     setSaveStatus('')
 
     try {
-      await saveToGitHub({ projects, songs, posts, socials }, githubToken)
+      await saveToGitHub({ videos, projects, songs, posts, socials }, githubToken)
       setSaveStatus('Saved to GitHub! Site will rebuild shortly.')
     } catch (err) {
       setSaveStatus(`Error: ${err.message}`)
@@ -150,6 +151,12 @@ function Admin() {
             Blog Posts
           </button>
           <button
+            className={`tab ${activeTab === 'videos' ? 'active' : ''}`}
+            onClick={() => setActiveTab('videos')}
+          >
+            Videos
+          </button>
+          <button
             className={`tab ${activeTab === 'projects' ? 'active' : ''}`}
             onClick={() => setActiveTab('projects')}
           >
@@ -172,6 +179,9 @@ function Admin() {
         <div className="admin-content">
           {activeTab === 'posts' && (
             <PostsManager posts={posts} addPost={addPost} updatePost={updatePost} deletePost={deletePost} />
+          )}
+          {activeTab === 'videos' && (
+            <VideosManager videos={videos} addVideo={addVideo} updateVideo={updateVideo} deleteVideo={deleteVideo} />
           )}
           {activeTab === 'projects' && (
             <ProjectsManager projects={projects} addProject={addProject} updateProject={updateProject} deleteProject={deleteProject} />
@@ -279,6 +289,90 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
                 <div className="item-actions">
                   <button onClick={() => setEditing({ ...post })}>Edit</button>
                   <button onClick={() => deletePost(post.slug)} className="btn-danger">Delete</button>
+                </div>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function VideosManager({ videos, addVideo, updateVideo, deleteVideo }) {
+  const [editing, setEditing] = useState(null)
+  const [newVideo, setNewVideo] = useState({ title: '', subtitle: '', youtubeUrl: '' })
+
+  const handleAdd = () => {
+    if (!newVideo.title || !newVideo.youtubeUrl) return
+    addVideo(newVideo)
+    setNewVideo({ title: '', subtitle: '', youtubeUrl: '' })
+  }
+
+  const handleUpdate = (id) => {
+    updateVideo(id, editing)
+    setEditing(null)
+  }
+
+  return (
+    <div className="manager">
+      <h2>Videos</h2>
+
+      <div className="add-form">
+        <h3>Add New Video</h3>
+        <input
+          placeholder="Title"
+          value={newVideo.title}
+          onChange={(e) => setNewVideo({ ...newVideo, title: e.target.value })}
+        />
+        <input
+          placeholder="Subtitle"
+          value={newVideo.subtitle}
+          onChange={(e) => setNewVideo({ ...newVideo, subtitle: e.target.value })}
+        />
+        <input
+          placeholder="YouTube URL (e.g. https://youtube.com/watch?v=...)"
+          value={newVideo.youtubeUrl}
+          onChange={(e) => setNewVideo({ ...newVideo, youtubeUrl: e.target.value })}
+        />
+        <button onClick={handleAdd}>Add Video</button>
+      </div>
+
+      <div className="items-list">
+        {videos.map((video) => (
+          <div key={video.id} className="item">
+            {editing?.id === video.id ? (
+              <>
+                <input
+                  value={editing.title}
+                  onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                  placeholder="Title"
+                />
+                <input
+                  value={editing.subtitle}
+                  onChange={(e) => setEditing({ ...editing, subtitle: e.target.value })}
+                  placeholder="Subtitle"
+                />
+                <input
+                  value={editing.youtubeUrl}
+                  onChange={(e) => setEditing({ ...editing, youtubeUrl: e.target.value })}
+                  placeholder="YouTube URL"
+                />
+                <div className="item-actions">
+                  <button onClick={() => handleUpdate(video.id)}>Save</button>
+                  <button onClick={() => setEditing(null)}>Cancel</button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="item-info">
+                  <strong>{video.title}</strong>
+                  <span className="item-meta">{video.subtitle}</span>
+                  <span className="item-meta item-url">{video.youtubeUrl}</span>
+                </div>
+                <div className="item-actions">
+                  <button onClick={() => setEditing({ ...video })}>Edit</button>
+                  <button onClick={() => deleteVideo(video.id)} className="btn-danger">Delete</button>
                 </div>
               </>
             )}
