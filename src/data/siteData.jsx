@@ -3,51 +3,47 @@ import { createContext, useContext, useState } from 'react'
 const defaultData = {
   projects: [
       {
-          "id": 1,
-          "title": "Project One",
-          "description": "A mysterious scene rendered in cycles"
-      },
-      {
-          "id": 2,
-          "title": "Project Two",
-          "description": "Low-poly environment design"
-      },
-      {
-          "id": 3,
-          "title": "Project Three",
-          "description": "Character modeling experiment"
+          "title": "Donut",
+          "description": "It's the donut. you know the one.",
+          "id": 1
       }
   ],
   songs: [
       {
-          "id": 1,
-          "title": "Song Title One",
-          "artist": "Artist Name",
-          "youtubeUrl": ""
+          "title": "Blackened Banners",
+          "artist": "Alestorm",
+          "youtubeUrl": "https://www.youtube.com/watch?v=nEQ_kV428AU",
+          "id": 1
       },
       {
-          "id": 2,
-          "title": "Song Title Two",
-          "artist": "Artist Name",
-          "youtubeUrl": ""
+          "title": "seishun complex",
+          "artist": "kessoku band",
+          "youtubeUrl": "https://www.youtube.com/watch?v=7FDRQifEMUQ",
+          "id": 2
       },
       {
-          "id": 3,
-          "title": "Song Title Three",
-          "artist": "Artist Name",
-          "youtubeUrl": ""
+          "title": "Mantis Lords",
+          "artist": "Christopher Larkin",
+          "youtubeUrl": "https://www.youtube.com/watch?v=Lp5M2BAXwSo",
+          "id": 3
       },
       {
-          "id": 4,
-          "title": "Song Title Four",
-          "artist": "Artist Name",
-          "youtubeUrl": ""
+          "title": "Death By Glamour",
+          "artist": "Toby Fox",
+          "youtubeUrl": "https://www.youtube.com/watch?v=Q9kDr4na0ls",
+          "id": 4
       },
       {
-          "id": 5,
-          "title": "Song Title Five",
-          "artist": "Artist Name",
-          "youtubeUrl": ""
+          "title": "'Til Depth Do Us Part",
+          "artist": "Deep Cut",
+          "youtubeUrl": "https://www.youtube.com/watch?v=lw1XwyW39uk",
+          "id": 5
+      },
+      {
+          "title": "In Memory",
+          "artist": "Nightmargin",
+          "youtubeUrl": "https://www.youtube.com/watch?v=z9-6ZAVOwHo",
+          "id": 6
       }
   ],
   posts: [],
@@ -55,26 +51,26 @@ const defaultData = {
       {
           "id": "discord",
           "name": "Discord",
-          "handle": "@tyler",
-          "url": "#"
+          "handle": "rAAAAAvioli",
+          "url": "@raaaaavioli"
       },
       {
           "id": "youtube",
           "name": "YouTube",
-          "handle": "Tyler Richardson",
-          "url": "#"
+          "handle": "Nozoa",
+          "url": "https://www.youtube.com/@NozoaST"
       },
       {
           "id": "twitch",
           "name": "Twitch",
-          "handle": "tyler_streams",
-          "url": "#"
+          "handle": "NozoaST",
+          "url": "https://www.twitch.tv/nozoast"
       },
       {
           "id": "letterboxd",
           "name": "Letterboxd",
-          "handle": "tyler",
-          "url": "#"
+          "handle": "LoreTie",
+          "url": "https://letterboxd.com/loretie/"
       }
   ],
 }
