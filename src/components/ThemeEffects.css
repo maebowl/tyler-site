@@ -23,6 +23,12 @@
   }
 }
 
+/* Christmas Theme - Navbar */
+.theme-christmas .navbar {
+  background: rgba(26, 31, 26, 0.95) !important;
+  border-bottom: 2px solid rgba(231, 76, 60, 0.4) !important;
+}
+
 /* Christmas Theme - Festive title */
 .theme-christmas .hero-title {
   background: linear-gradient(135deg, #e74c3c 0%, #27ae60 50%, #e74c3c 100%) !important;
@@ -47,6 +53,13 @@
   100% { background-position: 200% center; }
 }
 
+/* Halloween Theme - Navbar */
+.theme-halloween .navbar {
+  background: rgba(26, 21, 21, 0.95) !important;
+  border-bottom: 2px solid rgba(255, 107, 0, 0.4) !important;
+  box-shadow: 0 0 20px rgba(155, 89, 182, 0.2) !important;
+}
+
 /* Halloween Theme - Spooky glow */
 .theme-halloween {
   --spooky-glow: 0 0 20px rgba(255, 107, 0, 0.3);
@@ -61,6 +74,12 @@
 .theme-halloween .nav-logo {
   text-shadow: 0 0 10px rgba(155, 89, 182, 0.5) !important;
   color: #9b59b6 !important;
+}
+
+/* Birthday Theme - Navbar */
+.theme-birthday .navbar {
+  background: rgba(26, 26, 46, 0.95) !important;
+  border-bottom: 2px solid rgba(255, 105, 180, 0.4) !important;
 }
 
 /* Birthday Theme - Confetti and sparkles */
@@ -105,6 +124,11 @@
 @keyframes birthday-shimmer {
   0% { background-position: 0% center; }
   100% { background-position: 200% center; }
+}
+
+/* Pride Theme - Navbar */
+.theme-pride .navbar {
+  background: rgba(27, 27, 35, 0.95) !important;
 }
 
 /* Pride Theme - Rainbow accents */
