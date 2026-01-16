@@ -135,13 +135,6 @@ const defaultData = {
       },
       {
           "title": "City of Tears",
-          "artist": "Christopher Larkin",
-          "youtubeUrl": "",
-          "audioUrl": "/uploads/1768604086549-Hollow_Knight_OST_-_City_of_Tears.mp3",
-          "id": 7
-      },
-      {
-          "title": "City of Tears",
           "artist": "Christpher Larkin",
           "youtubeUrl": "",
           "audioUrl": "/uploads/1768604086549-Hollow_Knight_OST_-_City_of_Tears.mp3",
