@@ -82,6 +82,13 @@ const defaultData = {
   videos: [],
   projects: [
       {
+          "title": "Fluid Simulation",
+          "description": "this took so goddamn long to render",
+          "imageUrl": "",
+          "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
+          "id": 2
+      },
+      {
           "title": "The Donut",
           "description": "you know the one.",
           "imageUrl": "/uploads/1768541664379-image.png",
@@ -89,11 +96,11 @@ const defaultData = {
           "id": 1
       },
       {
-          "title": "Fluid Simulation",
-          "description": "this took so goddamn long to render",
+          "title": "Monitor",
+          "description": "i had to.",
           "imageUrl": "",
-          "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
-          "id": 2
+          "videoUrl": "/uploads/1768600668799-0001-0250.mkv",
+          "id": 3
       }
   ],
   songs: [
