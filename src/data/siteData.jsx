@@ -69,7 +69,7 @@ const defaultData = {
               },
               {
                   "image": "https://eightyeightthirty.one/88x31.png",
-                  "url": "https://github.com/NotNite/eightyeightthirtyone",
+                  "url": "https://eightyeaightthirty.one",
                   "alt": "8831"
               }
           ]
