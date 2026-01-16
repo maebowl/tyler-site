@@ -17,14 +17,14 @@ const defaultData = {
       },
       "videos": {
           "title": "Videos",
-          "intro": "Check out some of my videos and other content."
+          "intro": "Check out some of my favorite videos and content."
       },
       "contact": {
           "title": "Contact",
           "intro": "Come hang out, talk video games, or watch me fail.",
           "footer": "If you read this you're gay.",
           "taglines": {
-              "discord": "Let's chat!",
+              "discord": "",
               "youtube": "Random crap",
               "twitch": "Catch me live",
               "letterboxd": "Movie opinions",
