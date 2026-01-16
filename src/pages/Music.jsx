@@ -21,6 +21,9 @@ function Music() {
   const { songs, siteSettings } = useSiteData()
   const [activeVideo, setActiveVideo] = useState(null)
 
+  // Filter out songs with audioUrl (those are background music for the record player)
+  const displaySongs = songs.filter(s => !s.audioUrl)
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -50,7 +53,7 @@ function Music() {
           </p>
         </header>
         <div className="songs-grid">
-          {songs.map((song, index) => {
+          {displaySongs.map((song, index) => {
             const videoId = getYouTubeId(song.youtubeUrl)
             const thumbnailUrl = videoId
               ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
