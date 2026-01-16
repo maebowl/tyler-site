@@ -145,15 +145,21 @@ export async function uploadFileToGitHub(file, token) {
 function generateSiteDataFile(data) {
   const { siteSettings, videos, projects, songs, posts, socials } = data
 
+  // Helper to indent JSON properly (add 2 spaces to each line after the first)
+  const indent = (json) => {
+    const lines = json.split('\n')
+    return lines.map((line, i) => i === 0 ? line : '  ' + line).join('\n')
+  }
+
   return `import { createContext, useContext, useState } from 'react'
 
 const defaultData = {
-  siteSettings: ${JSON.stringify(siteSettings, null, 4).replace(/^/gm, '  ').trim()},
-  videos: ${JSON.stringify(videos, null, 4).replace(/^/gm, '  ').trim()},
-  projects: ${JSON.stringify(projects, null, 4).replace(/^/gm, '  ').trim()},
-  songs: ${JSON.stringify(songs, null, 4).replace(/^/gm, '  ').trim()},
-  posts: ${JSON.stringify(posts, null, 4).replace(/^/gm, '  ').trim()},
-  socials: ${JSON.stringify(socials, null, 4).replace(/^/gm, '  ').trim()},
+  siteSettings: ${indent(JSON.stringify(siteSettings, null, 4))},
+  videos: ${indent(JSON.stringify(videos, null, 4))},
+  projects: ${indent(JSON.stringify(projects, null, 4))},
+  songs: ${indent(JSON.stringify(songs, null, 4))},
+  posts: ${indent(JSON.stringify(posts, null, 4))},
+  socials: ${indent(JSON.stringify(socials, null, 4))},
 }
 
 const SiteDataContext = createContext()
