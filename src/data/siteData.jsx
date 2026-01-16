@@ -38,14 +38,7 @@ const defaultData = {
           "intro": "Thoughts, updates, and random projects."
       }
   },
-  videos: [
-      {
-          "id": 1,
-          "title": "Sample Video",
-          "subtitle": "A cool video description",
-          "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-      }
-  ],
+  videos: [],
   projects: [
       {
           "title": "The Donut",
