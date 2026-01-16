@@ -46,11 +46,6 @@ const defaultData = {
                   "image": "https://mabelwallin.com/uploads/1768557812569-IMG_1919.gif",
                   "url": "https://www.youtube.com/c/scottthewoz",
                   "alt": "ScottWoz"
-              },
-              {
-                  "image": "https://zenoslots.net/IMAGES/BUTTONS/ZENOSLOTS_Mini.png",
-                  "url": "https://zenoslots.net",
-                  "alt": "zenoslots"
               }
           ]
       },
@@ -74,6 +69,13 @@ const defaultData = {
           "imageUrl": "",
           "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
           "id": 2
+      },
+      {
+          "title": "Monitor",
+          "description": "i had to",
+          "imageUrl": "",
+          "videoUrl": "/uploads/1768600668799-0001-0250.mkv",
+          "id": 3
       }
   ],
   songs: [
