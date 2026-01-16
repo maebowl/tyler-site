@@ -1,6 +1,14 @@
 import { createContext, useContext, useState } from 'react'
 
 const defaultData = {
+  videos: [
+      {
+          "id": 1,
+          "title": "Sample Video",
+          "subtitle": "A cool video description",
+          "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      }
+  ],
   projects: [
       {
           "title": "Donut",
@@ -80,10 +88,27 @@ const SiteDataContext = createContext()
 export function SiteDataProvider({ children }) {
   const [data, setData] = useState(defaultData)
 
+  const updateVideos = (videos) => setData(prev => ({ ...prev, videos }))
   const updateProjects = (projects) => setData(prev => ({ ...prev, projects }))
   const updateSongs = (songs) => setData(prev => ({ ...prev, songs }))
   const updatePosts = (posts) => setData(prev => ({ ...prev, posts }))
   const updateSocials = (socials) => setData(prev => ({ ...prev, socials }))
+
+  const addVideo = (video) => {
+    const id = Math.max(0, ...data.videos.map(v => v.id)) + 1
+    setData(prev => ({ ...prev, videos: [...prev.videos, { ...video, id }] }))
+  }
+
+  const updateVideo = (id, updates) => {
+    setData(prev => ({
+      ...prev,
+      videos: prev.videos.map(v => v.id === id ? { ...v, ...updates } : v)
+    }))
+  }
+
+  const deleteVideo = (id) => {
+    setData(prev => ({ ...prev, videos: prev.videos.filter(v => v.id !== id) }))
+  }
 
   const addProject = (project) => {
     const id = Math.max(0, ...data.projects.map(p => p.id)) + 1
@@ -146,10 +171,14 @@ export function SiteDataProvider({ children }) {
   return (
     <SiteDataContext.Provider value={{
       ...data,
+      updateVideos,
       updateProjects,
       updateSongs,
       updatePosts,
       updateSocials,
+      addVideo,
+      updateVideo,
+      deleteVideo,
       addProject,
       updateProject,
       deleteProject,
