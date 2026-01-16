@@ -94,6 +94,13 @@ const defaultData = {
           "imageUrl": "",
           "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
           "id": 2
+      },
+      {
+          "title": "Monitor",
+          "description": "I had to.",
+          "imageUrl": "",
+          "videoUrl": "/uploads/1768600668799-0001-0250.mkv",
+          "id": 3
       }
   ],
   songs: [
