@@ -44,6 +44,12 @@ const defaultData = {
           "artist": "Nightmargin",
           "youtubeUrl": "https://www.youtube.com/watch?v=z9-6ZAVOwHo",
           "id": 6
+      },
+      {
+          "title": "Usseewa",
+          "artist": "Ado",
+          "youtubeUrl": "https://www.youtube.com/watch?v=7JI8XY1Fvto",
+          "id": 7
       }
   ],
   posts: [],
