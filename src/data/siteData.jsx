@@ -41,7 +41,7 @@ const defaultData = {
           "id": 1
       },
       {
-          "title": "Fluid Simulation Test",
+          "title": "Fluid Simulation",
           "description": "this took so goddamn long to render",
           "imageUrl": "",
           "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
