@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
 import ThemeEffects from './components/ThemeEffects'
+import RecordPlayer from './components/RecordPlayer'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
 import Music from './pages/Music'
@@ -16,6 +17,7 @@ function App() {
     <div className="app">
       <ThemeEffects />
       <Navbar />
+      <RecordPlayer />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />

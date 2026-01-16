@@ -210,7 +210,7 @@ function Admin() {
             <ProjectsManager projects={projects} addProject={addProject} updateProject={updateProject} deleteProject={deleteProject} updateProjects={updateProjects} githubToken={githubToken} />
           )}
           {activeTab === 'songs' && (
-            <SongsManager songs={songs} addSong={addSong} updateSong={updateSong} deleteSong={deleteSong} updateSongs={updateSongs} />
+            <SongsManager songs={songs} addSong={addSong} updateSong={updateSong} deleteSong={deleteSong} updateSongs={updateSongs} githubToken={githubToken} />
           )}
           {activeTab === 'socials' && (
             <SocialsManager socials={socials} updateSocial={updateSocial} updateSocials={updateSocials} />
@@ -889,14 +889,14 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject, u
   )
 }
 
-function SongsManager({ songs, addSong, updateSong, deleteSong, updateSongs }) {
+function SongsManager({ songs, addSong, updateSong, deleteSong, updateSongs, githubToken }) {
   const [editing, setEditing] = useState(null)
-  const [newSong, setNewSong] = useState({ title: '', artist: '', youtubeUrl: '' })
+  const [newSong, setNewSong] = useState({ title: '', artist: '', youtubeUrl: '', audioUrl: '' })
 
   const handleAdd = () => {
     if (!newSong.title || !newSong.artist) return
     addSong(newSong)
-    setNewSong({ title: '', artist: '', youtubeUrl: '' })
+    setNewSong({ title: '', artist: '', youtubeUrl: '', audioUrl: '' })
   }
 
   const handleUpdate = (id) => {
@@ -916,6 +916,7 @@ function SongsManager({ songs, addSong, updateSong, deleteSong, updateSongs }) {
   return (
     <div className="manager">
       <h2>Favorite Songs</h2>
+      <p className="manager-note">Upload MP3 files to enable playback in the record player. YouTube links are for display on the Music page.</p>
 
       <div className="add-form">
         <h3>Add New Song</h3>
@@ -929,6 +930,19 @@ function SongsManager({ songs, addSong, updateSong, deleteSong, updateSongs }) {
           value={newSong.artist}
           onChange={(e) => setNewSong({ ...newSong, artist: e.target.value })}
         />
+        <div className="media-input-group">
+          <input
+            placeholder="Audio URL (optional)"
+            value={newSong.audioUrl}
+            onChange={(e) => setNewSong({ ...newSong, audioUrl: e.target.value })}
+          />
+          <FileUpload
+            accept="audio/*"
+            label="Upload MP3"
+            githubToken={githubToken}
+            onUpload={(url) => setNewSong({ ...newSong, audioUrl: url })}
+          />
+        </div>
         <input
           placeholder="YouTube Music Video URL (optional)"
           value={newSong.youtubeUrl}
@@ -952,6 +966,19 @@ function SongsManager({ songs, addSong, updateSong, deleteSong, updateSongs }) {
                   onChange={(e) => setEditing({ ...editing, artist: e.target.value })}
                   placeholder="Artist"
                 />
+                <div className="media-input-group">
+                  <input
+                    value={editing.audioUrl || ''}
+                    onChange={(e) => setEditing({ ...editing, audioUrl: e.target.value })}
+                    placeholder="Audio URL (optional)"
+                  />
+                  <FileUpload
+                    accept="audio/*"
+                    label="Upload MP3"
+                    githubToken={githubToken}
+                    onUpload={(url) => setEditing({ ...editing, audioUrl: url })}
+                  />
+                </div>
                 <input
                   value={editing.youtubeUrl || ''}
                   onChange={(e) => setEditing({ ...editing, youtubeUrl: e.target.value })}
@@ -971,7 +998,8 @@ function SongsManager({ songs, addSong, updateSong, deleteSong, updateSongs }) {
                 <div className="item-info">
                   <strong>{song.title}</strong>
                   <span className="item-meta">{song.artist}</span>
-                  {song.youtubeUrl && <span className="item-meta item-url">{song.youtubeUrl}</span>}
+                  {song.audioUrl && <span className="item-meta item-url">🎵 {song.audioUrl}</span>}
+                  {song.youtubeUrl && <span className="item-meta item-url">▶️ {song.youtubeUrl}</span>}
                 </div>
                 <div className="item-actions">
                   <button onClick={() => setEditing({ ...song })}>Edit</button>
