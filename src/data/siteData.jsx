@@ -82,13 +82,6 @@ const defaultData = {
   videos: [],
   projects: [
       {
-          "title": "Fluid Simulation",
-          "description": "this took so goddamn long to render",
-          "imageUrl": "",
-          "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
-          "id": 2
-      },
-      {
           "title": "The Donut",
           "description": "you know the one.",
           "imageUrl": "/uploads/1768541664379-image.png",
@@ -96,11 +89,11 @@ const defaultData = {
           "id": 1
       },
       {
-          "title": "Monitor",
-          "description": "i had to.",
+          "title": "Fluid Simulation",
+          "description": "this took so goddamn long to render",
           "imageUrl": "",
-          "videoUrl": "/uploads/1768600668799-0001-0250.mkv",
-          "id": 3
+          "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
+          "id": 2
       }
   ],
   songs: [
@@ -139,6 +132,20 @@ const defaultData = {
           "artist": "Nightmargin",
           "youtubeUrl": "https://www.youtube.com/watch?v=z9-6ZAVOwHo",
           "id": 6
+      },
+      {
+          "title": "City of Tears",
+          "artist": "Christopher Larkin",
+          "youtubeUrl": "",
+          "audioUrl": "/uploads/1768604086549-Hollow_Knight_OST_-_City_of_Tears.mp3",
+          "id": 7
+      },
+      {
+          "title": "City of Tears",
+          "artist": "Christpher Larkin",
+          "youtubeUrl": "",
+          "audioUrl": "/uploads/1768604086549-Hollow_Knight_OST_-_City_of_Tears.mp3",
+          "id": 8
       }
   ],
   posts: [],
