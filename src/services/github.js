@@ -143,11 +143,13 @@ export async function uploadFileToGitHub(file, token) {
 }
 
 function generateSiteDataFile(data) {
-  const { projects, songs, posts, socials } = data
+  const { siteSettings, videos, projects, songs, posts, socials } = data
 
   return `import { createContext, useContext, useState } from 'react'
 
 const defaultData = {
+  siteSettings: ${JSON.stringify(siteSettings, null, 4).replace(/^/gm, '  ').trim()},
+  videos: ${JSON.stringify(videos, null, 4).replace(/^/gm, '  ').trim()},
   projects: ${JSON.stringify(projects, null, 4).replace(/^/gm, '  ').trim()},
   songs: ${JSON.stringify(songs, null, 4).replace(/^/gm, '  ').trim()},
   posts: ${JSON.stringify(posts, null, 4).replace(/^/gm, '  ').trim()},
@@ -159,10 +161,27 @@ const SiteDataContext = createContext()
 export function SiteDataProvider({ children }) {
   const [data, setData] = useState(defaultData)
 
+  const updateVideos = (videos) => setData(prev => ({ ...prev, videos }))
   const updateProjects = (projects) => setData(prev => ({ ...prev, projects }))
   const updateSongs = (songs) => setData(prev => ({ ...prev, songs }))
   const updatePosts = (posts) => setData(prev => ({ ...prev, posts }))
   const updateSocials = (socials) => setData(prev => ({ ...prev, socials }))
+
+  const addVideo = (video) => {
+    const id = Math.max(0, ...data.videos.map(v => v.id)) + 1
+    setData(prev => ({ ...prev, videos: [...prev.videos, { ...video, id }] }))
+  }
+
+  const updateVideo = (id, updates) => {
+    setData(prev => ({
+      ...prev,
+      videos: prev.videos.map(v => v.id === id ? { ...v, ...updates } : v)
+    }))
+  }
+
+  const deleteVideo = (id) => {
+    setData(prev => ({ ...prev, videos: prev.videos.filter(v => v.id !== id) }))
+  }
 
   const addProject = (project) => {
     const id = Math.max(0, ...data.projects.map(p => p.id)) + 1
@@ -218,6 +237,16 @@ export function SiteDataProvider({ children }) {
     }))
   }
 
+  const updateSiteSettings = (section, updates) => {
+    setData(prev => ({
+      ...prev,
+      siteSettings: {
+        ...prev.siteSettings,
+        [section]: { ...prev.siteSettings[section], ...updates }
+      }
+    }))
+  }
+
   const resetToDefaults = () => {
     setData(defaultData)
   }
@@ -225,10 +254,14 @@ export function SiteDataProvider({ children }) {
   return (
     <SiteDataContext.Provider value={{
       ...data,
+      updateVideos,
       updateProjects,
       updateSongs,
       updatePosts,
       updateSocials,
+      addVideo,
+      updateVideo,
+      deleteVideo,
       addProject,
       updateProject,
       deleteProject,
@@ -239,6 +272,7 @@ export function SiteDataProvider({ children }) {
       updatePost,
       deletePost,
       updateSocial,
+      updateSiteSettings,
       resetToDefaults,
     }}>
       {children}
