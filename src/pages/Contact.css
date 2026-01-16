@@ -165,13 +165,16 @@
 /* Other Socials Grid */
 .socials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1rem;
+  justify-items: center;
 }
 
 .social-card {
   position: relative;
   display: block;
+  width: 100%;
+  max-width: 320px;
   padding: 1.5rem;
   background: var(--bg-secondary);
   border-radius: 16px;
@@ -360,6 +363,7 @@
   }
 
   .social-card {
+    max-width: none;
     padding: 1.25rem;
   }
 

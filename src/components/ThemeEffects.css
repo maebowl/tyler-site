@@ -1,0 +1,158 @@
+/* Theme-specific effects and decorations */
+
+/* Christmas Theme - Snowflakes */
+.theme-christmas .snowflake {
+  position: fixed;
+  top: -10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 9999;
+  animation: snowfall linear infinite;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0.3;
+  }
+}
+
+/* Halloween Theme - Spooky glow */
+.theme-halloween {
+  --spooky-glow: 0 0 20px rgba(255, 107, 0, 0.3);
+}
+
+.theme-halloween .hero-title,
+.theme-halloween .page-title {
+  text-shadow: var(--spooky-glow);
+}
+
+.theme-halloween .nav-logo {
+  text-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
+}
+
+/* Birthday Theme - Confetti and sparkles */
+.theme-birthday .confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confetti-fall linear infinite;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.theme-birthday .hero-title {
+  background: linear-gradient(135deg, #ff69b4 0%, #ffd700 50%, #ff69b4 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: birthday-shimmer 3s linear infinite;
+}
+
+@keyframes birthday-shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Pride Theme - Rainbow accents */
+.theme-pride {
+  --rainbow-gradient: linear-gradient(
+    135deg,
+    #ff6b6b 0%,
+    #ffd93d 17%,
+    #6bcb77 33%,
+    #4d96ff 50%,
+    #9b59b6 67%,
+    #ff6b6b 83%,
+    #ffd93d 100%
+  );
+}
+
+.theme-pride .hero-title {
+  background: var(--rainbow-gradient);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbow-flow 4s linear infinite;
+}
+
+.theme-pride .nav-logo {
+  background: var(--rainbow-gradient);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbow-flow 4s linear infinite;
+}
+
+@keyframes rainbow-flow {
+  0% { background-position: 0% center; }
+  100% { background-position: 300% center; }
+}
+
+/* Pride progress bar / border */
+.theme-pride .navbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--rainbow-gradient);
+  background-size: 300% auto;
+  animation: rainbow-flow 4s linear infinite;
+}
+
+/* Theme indicator badge */
+.theme-badge {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-secondary);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 100;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.theme-badge:hover {
+  opacity: 1;
+}
+
+.theme-badge-icon {
+  font-size: 1rem;
+}
+
+/* Christmas badge */
+.theme-christmas .theme-badge-icon::before { content: '🎄'; }
+/* Halloween badge */
+.theme-halloween .theme-badge-icon::before { content: '🎃'; }
+/* Birthday badge */
+.theme-birthday .theme-badge-icon::before { content: '🎂'; }
+/* Pride badge */
+.theme-pride .theme-badge-icon::before { content: '🏳️‍🌈'; }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSiteData } from '../data/siteData'
 import { saveToGitHub, uploadFileToGitHub } from '../services/github'
+import { useTheme } from '../components/ThemeProvider'
 import './Admin.css'
 
 const ADMIN_PASSWORD = 'ilovelegobatman'
@@ -181,6 +182,12 @@ function Admin() {
           >
             Contact
           </button>
+          <button
+            className={`tab ${activeTab === 'themes' ? 'active' : ''}`}
+            onClick={() => setActiveTab('themes')}
+          >
+            Themes
+          </button>
         </div>
 
         <div className="admin-content">
@@ -201,6 +208,9 @@ function Admin() {
           )}
           {activeTab === 'socials' && (
             <SocialsManager socials={socials} updateSocial={updateSocial} />
+          )}
+          {activeTab === 'themes' && (
+            <ThemeManager />
           )}
         </div>
       </div>
@@ -928,6 +938,58 @@ function SocialsManager({ socials, updateSocial }) {
             )}
           </div>
         ))}
+      </div>
+    </div>
+  )
+}
+
+function ThemeManager() {
+  const { currentTheme, setCurrentTheme, themes, getActiveTheme } = useTheme()
+  const autoTheme = getActiveTheme()
+
+  const themeInfo = {
+    default: { icon: '🎨', description: 'The standard site theme' },
+    christmas: { icon: '🎄', description: 'Dec 10 - Jan 2: Snowflakes, red & green colors' },
+    halloween: { icon: '🎃', description: 'Oct 15 - Nov 1: Spooky orange & purple glow' },
+    birthday: { icon: '🎂', description: 'Aug 10-14: Confetti, pink & gold celebration' },
+    pride: { icon: '🏳️‍🌈', description: 'June: Rainbow gradients and colors' },
+  }
+
+  return (
+    <div className="manager">
+      <h2>Theme Preview</h2>
+      <p className="manager-note">
+        Themes activate automatically based on the date. Use these buttons to preview each theme.
+        {autoTheme !== 'default' && (
+          <span className="theme-auto-note"> Currently auto-active: <strong>{themes[autoTheme]?.name}</strong></span>
+        )}
+      </p>
+
+      <div className="theme-grid">
+        {Object.entries(themes).map(([key, theme]) => (
+          <button
+            key={key}
+            className={`theme-card ${currentTheme === key ? 'active' : ''} ${autoTheme === key && key !== 'default' ? 'auto-active' : ''}`}
+            onClick={() => setCurrentTheme(key)}
+          >
+            <span className="theme-icon">{themeInfo[key]?.icon}</span>
+            <span className="theme-name">{theme.name}</span>
+            <span className="theme-description">{themeInfo[key]?.description}</span>
+            {currentTheme === key && <span className="theme-badge-active">Active</span>}
+            {autoTheme === key && key !== 'default' && currentTheme !== key && (
+              <span className="theme-badge-scheduled">Scheduled</span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      <div className="theme-actions">
+        <button
+          className="btn-secondary"
+          onClick={() => setCurrentTheme(autoTheme)}
+        >
+          Reset to Auto ({themes[autoTheme]?.name})
+        </button>
       </div>
     </div>
   )

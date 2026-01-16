@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
+import ThemeEffects from './components/ThemeEffects'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
 import Music from './pages/Music'
@@ -13,6 +14,7 @@ import Admin from './pages/Admin'
 function App() {
   return (
     <div className="app">
+      <ThemeEffects />
       <Navbar />
       <main>
         <Routes>
