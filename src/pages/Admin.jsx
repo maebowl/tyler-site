@@ -167,7 +167,7 @@ function Admin() {
             className={`tab ${activeTab === 'projects' ? 'active' : ''}`}
             onClick={() => setActiveTab('projects')}
           >
-            Projects
+            3D Modeling
           </button>
           <button
             className={`tab ${activeTab === 'songs' ? 'active' : ''}`}
@@ -566,7 +566,7 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject })
 
   return (
     <div className="manager">
-      <h2>Blender Projects</h2>
+      <h2>3D Modeling</h2>
       <p className="manager-note">Add an image URL or MP4 video URL to display media. Video takes priority if both are set.</p>
 
       <div className="add-form">

@@ -8,7 +8,7 @@ const defaultData = {
       subtitle: "Creative developer & 3D artist"
     },
     projects: {
-      title: "Blender Projects",
+      title: "3D Modeling",
       intro: "Yes, I've made the donut. No, I won't stop there."
     },
     music: {
