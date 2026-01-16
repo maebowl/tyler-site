@@ -22,7 +22,7 @@ const defaultData = {
       "contact": {
           "title": "Contact",
           "intro": "Come hang out, talk video games, or watch me fail.",
-          "footer": "Or just yell into the void. I might hear you.",
+          "footer": "If you read this you're gay.",
           "taglines": {
               "discord": "Let's chat!",
               "youtube": "Random crap",
@@ -134,8 +134,8 @@ const defaultData = {
       {
           "id": "bluesky",
           "name": "Bluesky",
-          "handle": "your-handle",
-          "url": "https://bsky.app/profile/your-handle.bsky.social"
+          "handle": "Nozoa",
+          "url": "https://bsky.app/profile/nozoa.bsky.social"
       }
   ],
 }
@@ -222,26 +222,13 @@ export function SiteDataProvider({ children }) {
   }
 
   const updateSiteSettings = (section, updates) => {
-    setData(prev => {
-      const currentSection = prev.siteSettings[section] || {}
-      // Deep merge for nested objects like taglines
-      const mergedUpdates = { ...currentSection }
-      for (const [key, value] of Object.entries(updates)) {
-        if (value && typeof value === 'object' && !Array.isArray(value) && currentSection[key] && typeof currentSection[key] === 'object') {
-          // Deep merge nested objects
-          mergedUpdates[key] = { ...currentSection[key], ...value }
-        } else {
-          mergedUpdates[key] = value
-        }
+    setData(prev => ({
+      ...prev,
+      siteSettings: {
+        ...prev.siteSettings,
+        [section]: { ...prev.siteSettings[section], ...updates }
       }
-      return {
-        ...prev,
-        siteSettings: {
-          ...prev.siteSettings,
-          [section]: mergedUpdates
-        }
-      }
-    })
+    }))
   }
 
   const resetToDefaults = () => {
