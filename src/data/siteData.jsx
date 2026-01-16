@@ -66,6 +66,11 @@ const defaultData = {
                   "image": "https://notnite.com/buttons/qbittorrent.png",
                   "url": "https://www.qbittorrent.org/",
                   "alt": "qbit"
+              },
+              {
+                  "image": "https://eightyeightthirty.one/88x31.png",
+                  "url": "https://github.com/NotNite/eightyeightthirtyone",
+                  "alt": "8831"
               }
           ]
       },
