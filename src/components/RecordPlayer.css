@@ -237,7 +237,7 @@
 }
 
 .tone-arm.rest {
-  transform: rotate(-25deg);
+  transform: rotate(-45deg);
 }
 
 .tone-arm.playing {
@@ -245,7 +245,7 @@
 }
 
 .tone-arm.lifting {
-  transform: rotate(-15deg);
+  transform: rotate(-30deg);
 }
 
 .arm-base {
