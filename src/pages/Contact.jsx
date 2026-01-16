@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSiteData } from '../data/siteData'
 import './Contact.css'
 
@@ -35,12 +35,26 @@ const socialIcons = {
   ),
 }
 
+const socialTaglines = {
+  discord: "Let's chat!",
+  youtube: "Watch me create",
+  twitch: "Catch me live",
+  letterboxd: "Movie opinions",
+  pinterest: "Visual inspo",
+  characterhub: "My characters",
+}
+
 function Contact() {
   const { socials, siteSettings } = useSiteData()
+  const [hoveredCard, setHoveredCard] = useState(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  // Get featured social (first one, or discord if exists)
+  const featuredSocial = socials.find(s => s.id === 'discord') || socials[0]
+  const otherSocials = socials.filter(s => s.id !== featuredSocial?.id)
 
   return (
     <div className="contact-page">
@@ -51,28 +65,71 @@ function Contact() {
             {siteSettings.contact.intro}
           </p>
         </header>
+
+        {/* Featured Card */}
+        {featuredSocial && (
+          <a
+            href={featuredSocial.url}
+            className={`featured-social social-${featuredSocial.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="featured-glow"></div>
+            <div className="featured-content">
+              <div className="featured-icon-wrapper">
+                {socialIcons[featuredSocial.id]}
+              </div>
+              <div className="featured-info">
+                <span className="featured-tagline">{socialTaglines[featuredSocial.id] || "Find me here"}</span>
+                <span className="featured-name">{featuredSocial.name}</span>
+                <span className="featured-handle">@{featuredSocial.handle}</span>
+              </div>
+            </div>
+            <div className="featured-cta">
+              <span>Connect</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </a>
+        )}
+
+        {/* Other Socials */}
         <div className="socials-grid">
-          {socials.map((social, index) => (
+          {otherSocials.map((social, index) => (
             <a
               key={social.id}
               href={social.url}
-              className={`social-card social-${social.id}`}
+              className={`social-card social-${social.id} ${hoveredCard === social.id ? 'hovered' : ''}`}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              style={{ animationDelay: `${(index + 1) * 0.1}s` }}
+              onMouseEnter={() => setHoveredCard(social.id)}
+              onMouseLeave={() => setHoveredCard(null)}
             >
-              <div className="social-icon-wrapper">
-                {socialIcons[social.id]}
+              <div className="card-bg"></div>
+              <div className="card-content">
+                <div className="social-icon-wrapper">
+                  {socialIcons[social.id]}
+                </div>
+                <div className="social-info">
+                  <span className="social-tagline">{socialTaglines[social.id] || "Check it out"}</span>
+                  <span className="social-name">{social.name}</span>
+                  <span className="social-handle">@{social.handle}</span>
+                </div>
+                <div className="social-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                  </svg>
+                </div>
               </div>
-              <div className="social-info">
-                <span className="social-name">{social.name}</span>
-                <span className="social-handle">{social.handle}</span>
-              </div>
-              <svg className="social-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
             </a>
           ))}
+        </div>
+
+        {/* Fun footer */}
+        <div className="contact-footer">
+          <p>Or just yell into the void. I might hear you.</p>
         </div>
       </div>
     </div>
