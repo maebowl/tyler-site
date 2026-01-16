@@ -46,6 +46,27 @@ export default function RecordPlayer() {
     }
   }, [currentIndex, currentSong])
 
+  // Pause when other media starts playing (e.g., YouTube videos)
+  useEffect(() => {
+    const handleOtherMediaPlay = (e) => {
+      // Ignore our own audio element
+      if (e.target === audioRef.current) return
+
+      // Pause the record player when other media plays
+      if (audioRef.current && isPlaying) {
+        audioRef.current.pause()
+        setIsPlaying(false)
+      }
+    }
+
+    // Listen for play events on any media element
+    document.addEventListener('play', handleOtherMediaPlay, true)
+
+    return () => {
+      document.removeEventListener('play', handleOtherMediaPlay, true)
+    }
+  }, [isPlaying])
+
   const handleTimeUpdate = () => {
     if (audioRef.current) {
       setProgress(audioRef.current.currentTime)
