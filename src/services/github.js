@@ -244,13 +244,26 @@ export function SiteDataProvider({ children }) {
   }
 
   const updateSiteSettings = (section, updates) => {
-    setData(prev => ({
-      ...prev,
-      siteSettings: {
-        ...prev.siteSettings,
-        [section]: { ...prev.siteSettings[section], ...updates }
+    setData(prev => {
+      const currentSection = prev.siteSettings[section] || {}
+      // Deep merge for nested objects like taglines
+      const mergedUpdates = { ...currentSection }
+      for (const [key, value] of Object.entries(updates)) {
+        if (value && typeof value === 'object' && !Array.isArray(value) && currentSection[key] && typeof currentSection[key] === 'object') {
+          // Deep merge nested objects
+          mergedUpdates[key] = { ...currentSection[key], ...value }
+        } else {
+          mergedUpdates[key] = value
+        }
       }
-    }))
+      return {
+        ...prev,
+        siteSettings: {
+          ...prev.siteSettings,
+          [section]: mergedUpdates
+        }
+      }
+    })
   }
 
   const resetToDefaults = () => {
