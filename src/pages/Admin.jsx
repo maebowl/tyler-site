@@ -183,6 +183,12 @@ function Admin() {
             Contact
           </button>
           <button
+            className={`tab ${activeTab === 'badges' ? 'active' : ''}`}
+            onClick={() => setActiveTab('badges')}
+          >
+            Badges
+          </button>
+          <button
             className={`tab ${activeTab === 'themes' ? 'active' : ''}`}
             onClick={() => setActiveTab('themes')}
           >
@@ -208,6 +214,9 @@ function Admin() {
           )}
           {activeTab === 'socials' && (
             <SocialsManager socials={socials} updateSocial={updateSocial} />
+          )}
+          {activeTab === 'badges' && (
+            <BadgesManager siteSettings={siteSettings} updateSiteSettings={updateSiteSettings} githubToken={githubToken} />
           )}
           {activeTab === 'themes' && (
             <ThemeManager />
@@ -407,62 +416,6 @@ function SiteSettingsManager({ siteSettings, updateSiteSettings }) {
               />
             </label>
           ))}
-        </div>
-        <h4 className="subsection-title">Badges</h4>
-        <p className="manager-note">Add 88x31 badges. Each badge needs an image URL and optional link URL.</p>
-        <div className="badges-manager">
-          {(siteSettings.contact.badges || []).map((badge, index) => (
-            <div key={index} className="badge-item">
-              <img src={badge.image} alt={badge.alt || 'Badge'} className="badge-preview" />
-              <div className="badge-fields">
-                <input
-                  value={badge.image}
-                  onChange={(e) => {
-                    const newBadges = [...(siteSettings.contact.badges || [])]
-                    newBadges[index] = { ...badge, image: e.target.value }
-                    updateSiteSettings('contact', { badges: newBadges })
-                  }}
-                  placeholder="Image URL"
-                />
-                <input
-                  value={badge.url || ''}
-                  onChange={(e) => {
-                    const newBadges = [...(siteSettings.contact.badges || [])]
-                    newBadges[index] = { ...badge, url: e.target.value }
-                    updateSiteSettings('contact', { badges: newBadges })
-                  }}
-                  placeholder="Link URL (optional)"
-                />
-                <input
-                  value={badge.alt || ''}
-                  onChange={(e) => {
-                    const newBadges = [...(siteSettings.contact.badges || [])]
-                    newBadges[index] = { ...badge, alt: e.target.value }
-                    updateSiteSettings('contact', { badges: newBadges })
-                  }}
-                  placeholder="Alt text"
-                />
-              </div>
-              <button
-                className="btn-remove"
-                onClick={() => {
-                  const newBadges = (siteSettings.contact.badges || []).filter((_, i) => i !== index)
-                  updateSiteSettings('contact', { badges: newBadges })
-                }}
-              >
-                ×
-              </button>
-            </div>
-          ))}
-          <button
-            className="btn-secondary"
-            onClick={() => {
-              const newBadges = [...(siteSettings.contact.badges || []), { image: '', url: '', alt: '' }]
-              updateSiteSettings('contact', { badges: newBadges })
-            }}
-          >
-            + Add Badge
-          </button>
         </div>
       </div>
 
@@ -1033,6 +986,121 @@ function SocialsManager({ socials, updateSocial }) {
             )}
           </div>
         ))}
+      </div>
+    </div>
+  )
+}
+
+function BadgesManager({ siteSettings, updateSiteSettings, githubToken }) {
+  const [uploading, setUploading] = useState(false)
+  const fileInputRef = useRef(null)
+
+  const badges = siteSettings.contact?.badges || []
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file || !githubToken) return
+
+    setUploading(true)
+    try {
+      const url = await uploadFileToGitHub(file, githubToken)
+      const newBadges = [...badges, { image: url, url: '', alt: file.name.replace(/\.[^/.]+$/, '') }]
+      updateSiteSettings('contact', { badges: newBadges })
+    } catch (err) {
+      console.error('Upload failed:', err)
+    } finally {
+      setUploading(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
+
+  const updateBadge = (index, field, value) => {
+    const newBadges = [...badges]
+    newBadges[index] = { ...newBadges[index], [field]: value }
+    updateSiteSettings('contact', { badges: newBadges })
+  }
+
+  const removeBadge = (index) => {
+    const newBadges = badges.filter((_, i) => i !== index)
+    updateSiteSettings('contact', { badges: newBadges })
+  }
+
+  const addBadgeByUrl = () => {
+    const newBadges = [...badges, { image: '', url: '', alt: '' }]
+    updateSiteSettings('contact', { badges: newBadges })
+  }
+
+  return (
+    <div className="manager">
+      <h2>Badges</h2>
+      <p className="manager-note">Add 88x31 badges to your Contact page. Upload from your device or paste an image URL.</p>
+
+      <div className="badges-add-section">
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileUpload}
+          accept="image/*"
+          style={{ display: 'none' }}
+        />
+        <button
+          className="btn-primary"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={uploading || !githubToken}
+        >
+          {uploading ? 'Uploading...' : 'Upload Badge'}
+        </button>
+        <button className="btn-secondary" onClick={addBadgeByUrl}>
+          Add by URL
+        </button>
+        {!githubToken && <p className="manager-note" style={{ color: 'var(--accent-primary)' }}>Set GitHub token to enable uploads</p>}
+      </div>
+
+      <div className="badges-list">
+        {badges.length === 0 ? (
+          <p className="no-items">No badges yet. Add some!</p>
+        ) : (
+          badges.map((badge, index) => (
+            <div key={index} className="badge-item-full">
+              <div className="badge-preview-large">
+                {badge.image ? (
+                  <img src={badge.image} alt={badge.alt || 'Badge'} />
+                ) : (
+                  <div className="badge-placeholder">No image</div>
+                )}
+              </div>
+              <div className="badge-fields-full">
+                <label>
+                  <span>Image URL</span>
+                  <input
+                    value={badge.image}
+                    onChange={(e) => updateBadge(index, 'image', e.target.value)}
+                    placeholder="https://example.com/badge.gif"
+                  />
+                </label>
+                <label>
+                  <span>Link URL (optional)</span>
+                  <input
+                    value={badge.url || ''}
+                    onChange={(e) => updateBadge(index, 'url', e.target.value)}
+                    placeholder="https://example.com"
+                  />
+                </label>
+                <label>
+                  <span>Alt Text</span>
+                  <input
+                    value={badge.alt || ''}
+                    onChange={(e) => updateBadge(index, 'alt', e.target.value)}
+                    placeholder="Badge description"
+                  />
+                </label>
+              </div>
+              <button className="btn-remove-large" onClick={() => removeBadge(index)}>
+                Delete
+              </button>
+            </div>
+          ))
+        )}
       </div>
     </div>
   )
