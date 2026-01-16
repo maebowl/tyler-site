@@ -24,7 +24,7 @@ const defaultData = {
           "intro": "Come hang out, talk video games, or watch me fail.",
           "footer": "If you read this you're gay.",
           "taglines": {
-              "discord": "",
+              "discord": "Join my server",
               "youtube": "Random crap",
               "twitch": "Catch me live",
               "letterboxd": "Movie opinions",
@@ -98,8 +98,8 @@ const defaultData = {
       {
           "id": "discord",
           "name": "Discord",
-          "handle": "rAAAAAvioli",
-          "url": "@raaaaavioli"
+          "handle": "Somewhere in Splatsville",
+          "url": "https://discord.gg/6EMXrZFQaq"
       },
       {
           "id": "youtube",
