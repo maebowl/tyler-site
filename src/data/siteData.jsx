@@ -5,15 +5,15 @@ const defaultData = {
       "hero": {
           "greeting": "Hi, I'm",
           "name": "Tyler Richardson",
-          "subtitle": "Creative developer & 3D artist"
+          "subtitle": "Professional idiot and bad at video games"
       },
       "projects": {
           "title": "3D Modeling",
-          "intro": "Yes, I've made the donut. No, I won't stop there."
+          "intro": "No, this isn't my entire personality. Maybe."
       },
       "music": {
           "title": "Favorite Songs",
-          "intro": "What's on rotation while I'm drumming, gaming, or pretending to practice bass."
+          "intro": "The music I either bang my head to or bawl my eyes out to."
       },
       "videos": {
           "title": "Videos",
@@ -21,7 +21,7 @@ const defaultData = {
       },
       "contact": {
           "title": "Contact",
-          "intro": "Come hang out, talk retro games, or watch me fail at whatever I'm doing."
+          "intro": "Come hang out, talk video games, or watch me fail."
       }
   },
   videos: [
