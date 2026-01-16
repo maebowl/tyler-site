@@ -25,17 +25,17 @@ const defaultData = {
           "footer": "Or just yell into the void. I might hear you.",
           "taglines": {
               "discord": "Let's chat!",
-              "youtube": "Watch me create",
+              "youtube": "Random crap",
               "twitch": "Catch me live",
               "letterboxd": "Movie opinions",
-              "pinterest": "Visual inspo",
+              "pinterest": "Art I like",
               "characterhub": "My characters",
-              "bluesky": "Hot takes"
+              "bluesky": "Irrelevant"
           }
       },
       "blog": {
           "title": "Blog",
-          "intro": "Thoughts, updates, and random musings."
+          "intro": "Thoughts, updates, and random projects."
       }
   },
   videos: [
@@ -141,8 +141,8 @@ const defaultData = {
       {
           "id": "bluesky",
           "name": "Bluesky",
-          "handle": "Nozoa",
-          "url": "https://bsky.app/profile/nozoa.bsky.social"
+          "handle": "your-handle",
+          "url": "https://bsky.app/profile/your-handle.bsky.social"
       }
   ],
 }
