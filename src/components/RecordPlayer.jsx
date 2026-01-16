@@ -46,24 +46,19 @@ export default function RecordPlayer() {
     }
   }, [currentIndex, currentSong])
 
-  // Pause when other media starts playing (e.g., YouTube videos)
+  // Pause when a modal with media opens (e.g., YouTube video modal)
   useEffect(() => {
-    const handleOtherMediaPlay = (e) => {
-      // Ignore our own audio element
-      if (e.target === audioRef.current) return
-
-      // Pause the record player when other media plays
+    const handleModalOpen = () => {
       if (audioRef.current && isPlaying) {
         audioRef.current.pause()
         setIsPlaying(false)
       }
     }
 
-    // Listen for play events on any media element
-    document.addEventListener('play', handleOtherMediaPlay, true)
+    window.addEventListener('modalMediaOpen', handleModalOpen)
 
     return () => {
-      document.removeEventListener('play', handleOtherMediaPlay, true)
+      window.removeEventListener('modalMediaOpen', handleModalOpen)
     }
   }, [isPlaying])
 
