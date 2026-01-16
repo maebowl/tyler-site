@@ -31,7 +31,13 @@ const defaultData = {
               "characterhub": "My characters",
               "bluesky": "Irrelevant"
           },
-          "badges": []
+          "badges": [
+              {
+                  "image": "/uploads/1768599526001-tyler.gif",
+                  "url": "https://tyler-site.pages.dev",
+                  "alt": "tyler"
+              }
+          ]
       },
       "blog": {
           "title": "Blog",
