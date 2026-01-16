@@ -97,6 +97,14 @@
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
+/* Social-specific colors */
+.social-discord .social-icon-wrapper { color: #5865F2; }
+.social-youtube .social-icon-wrapper { color: #FF0000; }
+.social-twitch .social-icon-wrapper { color: #9146FF; }
+.social-letterboxd .social-icon-wrapper { color: #00E054; }
+.social-pinterest .social-icon-wrapper { color: #E60023; }
+.social-characterhub .social-icon-wrapper { color: #7C4DFF; }
+
 @media (max-width: 768px) {
   .contact-page {
     padding: 6rem 1.5rem 4rem;

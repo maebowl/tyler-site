@@ -104,6 +104,18 @@ const defaultData = {
           "name": "Letterboxd",
           "handle": "LoreTie",
           "url": "https://letterboxd.com/loretie/"
+      },
+      {
+          "id": "pinterest",
+          "name": "Pinterest",
+          "handle": "",
+          "url": ""
+      },
+      {
+          "id": "characterhub",
+          "name": "CharacterHub",
+          "handle": "",
+          "url": ""
       }
   ],
 }
