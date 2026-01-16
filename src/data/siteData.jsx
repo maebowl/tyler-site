@@ -36,6 +36,11 @@ const defaultData = {
                   "image": "/uploads/1768599526001-tyler.gif",
                   "url": "https://tyler-site.pages.dev",
                   "alt": "tyler"
+              },
+              {
+                  "image": "/uploads/1768599599069-mabelwallin-com88x31.gif",
+                  "url": "https://mabelwallin.com",
+                  "alt": "traaaaaaaans"
               }
           ]
       },
