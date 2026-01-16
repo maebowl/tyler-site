@@ -1,5 +1,6 @@
 const GITHUB_REPO = 'maebowl/tyler-site'
 const DATA_FILE_PATH = 'src/data/siteData.jsx'
+const UPLOADS_PATH = 'public/uploads'
 
 // Helper to properly encode UTF-8 to base64
 function utf8ToBase64(str) {
@@ -64,6 +65,81 @@ export async function saveToGitHub(data, token) {
   }
 
   return await updateResponse.json()
+}
+
+export async function uploadFileToGitHub(file, token) {
+  if (!token) {
+    throw new Error('GitHub token is required')
+  }
+
+  // Generate unique filename with timestamp
+  const timestamp = Date.now()
+  const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_')
+  const filename = `${timestamp}-${safeName}`
+  const filePath = `${UPLOADS_PATH}/${filename}`
+
+  // Read file as base64
+  const base64Content = await new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      const result = reader.result
+      // Remove data URL prefix (e.g., "data:image/png;base64,")
+      const base64 = result.split(',')[1]
+      resolve(base64)
+    }
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+
+  // Check if file already exists (to get SHA for update)
+  let existingSha = null
+  try {
+    const checkResponse = await fetch(
+      `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+        },
+      }
+    )
+    if (checkResponse.ok) {
+      const existingFile = await checkResponse.json()
+      existingSha = existingFile.sha
+    }
+  } catch (e) {
+    // File doesn't exist, that's fine
+  }
+
+  // Upload file to GitHub
+  const uploadBody = {
+    message: `Upload ${filename}`,
+    content: base64Content,
+  }
+  if (existingSha) {
+    uploadBody.sha = existingSha
+  }
+
+  const uploadResponse = await fetch(
+    `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
+    {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(uploadBody),
+    }
+  )
+
+  if (!uploadResponse.ok) {
+    const error = await uploadResponse.json()
+    throw new Error(error.message || 'Failed to upload file')
+  }
+
+  // Return the public URL path (relative to site root)
+  return `/uploads/${filename}`
 }
 
 function generateSiteDataFile(data) {

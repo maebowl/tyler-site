@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useSiteData } from '../data/siteData'
-import { saveToGitHub } from '../services/github'
+import { saveToGitHub, uploadFileToGitHub } from '../services/github'
 import './Admin.css'
 
 const ADMIN_PASSWORD = 'ilovelegobatman'
@@ -188,13 +188,13 @@ function Admin() {
             <SiteSettingsManager siteSettings={siteSettings} updateSiteSettings={updateSiteSettings} />
           )}
           {activeTab === 'posts' && (
-            <PostsManager posts={posts} addPost={addPost} updatePost={updatePost} deletePost={deletePost} />
+            <PostsManager posts={posts} addPost={addPost} updatePost={updatePost} deletePost={deletePost} githubToken={githubToken} />
           )}
           {activeTab === 'videos' && (
             <VideosManager videos={videos} addVideo={addVideo} updateVideo={updateVideo} deleteVideo={deleteVideo} />
           )}
           {activeTab === 'projects' && (
-            <ProjectsManager projects={projects} addProject={addProject} updateProject={updateProject} deleteProject={deleteProject} />
+            <ProjectsManager projects={projects} addProject={addProject} updateProject={updateProject} deleteProject={deleteProject} githubToken={githubToken} />
           )}
           {activeTab === 'songs' && (
             <SongsManager songs={songs} addSong={addSong} updateSong={updateSong} deleteSong={deleteSong} />
@@ -204,6 +204,54 @@ function Admin() {
           )}
         </div>
       </div>
+    </div>
+  )
+}
+
+function FileUpload({ onUpload, accept, label, githubToken }) {
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState('')
+  const fileInputRef = useRef(null)
+
+  const handleFileSelect = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (!githubToken) {
+      setError('Please set your GitHub token first')
+      return
+    }
+
+    setUploading(true)
+    setError('')
+
+    try {
+      const url = await uploadFileToGitHub(file, githubToken)
+      onUpload(url)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setUploading(false)
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+    }
+  }
+
+  return (
+    <div className="file-upload">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={accept}
+        onChange={handleFileSelect}
+        disabled={uploading}
+        id={`file-${label}`}
+      />
+      <label htmlFor={`file-${label}`} className={`file-upload-btn ${uploading ? 'uploading' : ''}`}>
+        {uploading ? 'Uploading...' : label}
+      </label>
+      {error && <span className="file-upload-error">{error}</span>}
     </div>
   )
 }
@@ -339,7 +387,7 @@ function SiteSettingsManager({ siteSettings, updateSiteSettings }) {
   )
 }
 
-function PostsManager({ posts, addPost, updatePost, deletePost }) {
+function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
   const [editing, setEditing] = useState(null)
   const [newPost, setNewPost] = useState({ slug: '', title: '', date: '', excerpt: '', content: '', imageUrl: '', videoUrl: '' })
 
@@ -360,7 +408,7 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
   return (
     <div className="manager">
       <h2>Blog Posts</h2>
-      <p className="manager-note">Add an image URL or MP4 video URL to display featured media at the top of posts.</p>
+      <p className="manager-note">Upload images or MP4 videos, or paste a URL for featured media.</p>
 
       <div className="add-form">
         <h3>Add New Post</h3>
@@ -384,16 +432,32 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
           value={newPost.excerpt}
           onChange={(e) => setNewPost({ ...newPost, excerpt: e.target.value })}
         />
-        <input
-          placeholder="Featured Image URL (optional)"
-          value={newPost.imageUrl}
-          onChange={(e) => setNewPost({ ...newPost, imageUrl: e.target.value })}
-        />
-        <input
-          placeholder="Featured MP4 Video URL (optional, takes priority over image)"
-          value={newPost.videoUrl}
-          onChange={(e) => setNewPost({ ...newPost, videoUrl: e.target.value })}
-        />
+        <div className="media-input-group">
+          <input
+            placeholder="Featured Image URL (optional)"
+            value={newPost.imageUrl}
+            onChange={(e) => setNewPost({ ...newPost, imageUrl: e.target.value })}
+          />
+          <FileUpload
+            accept="image/*"
+            label="Upload Image"
+            githubToken={githubToken}
+            onUpload={(url) => setNewPost({ ...newPost, imageUrl: url })}
+          />
+        </div>
+        <div className="media-input-group">
+          <input
+            placeholder="Featured MP4 Video URL (optional, takes priority)"
+            value={newPost.videoUrl}
+            onChange={(e) => setNewPost({ ...newPost, videoUrl: e.target.value })}
+          />
+          <FileUpload
+            accept="video/mp4"
+            label="Upload Video"
+            githubToken={githubToken}
+            onUpload={(url) => setNewPost({ ...newPost, videoUrl: url })}
+          />
+        </div>
         <textarea
           placeholder="Content (HTML supported)"
           value={newPost.content}
@@ -423,16 +487,32 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
                   onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })}
                   placeholder="Excerpt"
                 />
-                <input
-                  value={editing.imageUrl || ''}
-                  onChange={(e) => setEditing({ ...editing, imageUrl: e.target.value })}
-                  placeholder="Featured Image URL (optional)"
-                />
-                <input
-                  value={editing.videoUrl || ''}
-                  onChange={(e) => setEditing({ ...editing, videoUrl: e.target.value })}
-                  placeholder="Featured MP4 Video URL (optional)"
-                />
+                <div className="media-input-group">
+                  <input
+                    value={editing.imageUrl || ''}
+                    onChange={(e) => setEditing({ ...editing, imageUrl: e.target.value })}
+                    placeholder="Featured Image URL (optional)"
+                  />
+                  <FileUpload
+                    accept="image/*"
+                    label="Upload Image"
+                    githubToken={githubToken}
+                    onUpload={(url) => setEditing({ ...editing, imageUrl: url })}
+                  />
+                </div>
+                <div className="media-input-group">
+                  <input
+                    value={editing.videoUrl || ''}
+                    onChange={(e) => setEditing({ ...editing, videoUrl: e.target.value })}
+                    placeholder="Featured MP4 Video URL (optional)"
+                  />
+                  <FileUpload
+                    accept="video/mp4"
+                    label="Upload Video"
+                    githubToken={githubToken}
+                    onUpload={(url) => setEditing({ ...editing, videoUrl: url })}
+                  />
+                </div>
                 <textarea
                   value={editing.content}
                   onChange={(e) => setEditing({ ...editing, content: e.target.value })}
@@ -549,7 +629,7 @@ function VideosManager({ videos, addVideo, updateVideo, deleteVideo }) {
   )
 }
 
-function ProjectsManager({ projects, addProject, updateProject, deleteProject }) {
+function ProjectsManager({ projects, addProject, updateProject, deleteProject, githubToken }) {
   const [editing, setEditing] = useState(null)
   const [newProject, setNewProject] = useState({ title: '', description: '', imageUrl: '', videoUrl: '' })
 
@@ -567,7 +647,7 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject })
   return (
     <div className="manager">
       <h2>3D Modeling</h2>
-      <p className="manager-note">Add an image URL or MP4 video URL to display media. Video takes priority if both are set.</p>
+      <p className="manager-note">Upload images or MP4 videos, or paste a URL. Video takes priority if both are set.</p>
 
       <div className="add-form">
         <h3>Add New Project</h3>
@@ -581,16 +661,32 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject })
           value={newProject.description}
           onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
         />
-        <input
-          placeholder="Image URL (optional)"
-          value={newProject.imageUrl}
-          onChange={(e) => setNewProject({ ...newProject, imageUrl: e.target.value })}
-        />
-        <input
-          placeholder="MP4 Video URL (optional, takes priority over image)"
-          value={newProject.videoUrl}
-          onChange={(e) => setNewProject({ ...newProject, videoUrl: e.target.value })}
-        />
+        <div className="media-input-group">
+          <input
+            placeholder="Image URL (optional)"
+            value={newProject.imageUrl}
+            onChange={(e) => setNewProject({ ...newProject, imageUrl: e.target.value })}
+          />
+          <FileUpload
+            accept="image/*"
+            label="Upload Image"
+            githubToken={githubToken}
+            onUpload={(url) => setNewProject({ ...newProject, imageUrl: url })}
+          />
+        </div>
+        <div className="media-input-group">
+          <input
+            placeholder="MP4 Video URL (optional, takes priority)"
+            value={newProject.videoUrl}
+            onChange={(e) => setNewProject({ ...newProject, videoUrl: e.target.value })}
+          />
+          <FileUpload
+            accept="video/mp4"
+            label="Upload Video"
+            githubToken={githubToken}
+            onUpload={(url) => setNewProject({ ...newProject, videoUrl: url })}
+          />
+        </div>
         <button onClick={handleAdd}>Add Project</button>
       </div>
 
@@ -609,16 +705,32 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject })
                   onChange={(e) => setEditing({ ...editing, description: e.target.value })}
                   placeholder="Description"
                 />
-                <input
-                  value={editing.imageUrl || ''}
-                  onChange={(e) => setEditing({ ...editing, imageUrl: e.target.value })}
-                  placeholder="Image URL (optional)"
-                />
-                <input
-                  value={editing.videoUrl || ''}
-                  onChange={(e) => setEditing({ ...editing, videoUrl: e.target.value })}
-                  placeholder="MP4 Video URL (optional)"
-                />
+                <div className="media-input-group">
+                  <input
+                    value={editing.imageUrl || ''}
+                    onChange={(e) => setEditing({ ...editing, imageUrl: e.target.value })}
+                    placeholder="Image URL (optional)"
+                  />
+                  <FileUpload
+                    accept="image/*"
+                    label="Upload Image"
+                    githubToken={githubToken}
+                    onUpload={(url) => setEditing({ ...editing, imageUrl: url })}
+                  />
+                </div>
+                <div className="media-input-group">
+                  <input
+                    value={editing.videoUrl || ''}
+                    onChange={(e) => setEditing({ ...editing, videoUrl: e.target.value })}
+                    placeholder="MP4 Video URL (optional)"
+                  />
+                  <FileUpload
+                    accept="video/mp4"
+                    label="Upload Video"
+                    githubToken={githubToken}
+                    onUpload={(url) => setEditing({ ...editing, videoUrl: url })}
+                  />
+                </div>
                 <div className="item-actions">
                   <button onClick={() => handleUpdate(project.id)}>Save</button>
                   <button onClick={() => setEditing(null)}>Cancel</button>
