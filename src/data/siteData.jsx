@@ -8,7 +8,7 @@ const defaultData = {
           "subtitle": "Professional idiot and bad at video games"
       },
       "projects": {
-          "title": "3D Modeling",
+          "title": "Blender",
           "intro": "No, this isn't my entire personality. Maybe."
       },
       "music": {
