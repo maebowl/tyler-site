@@ -131,54 +131,72 @@
   background: rgba(27, 27, 35, 0.95) !important;
 }
 
-/* Pride Theme - Rainbow accents */
+/* Pride Theme - Rainbow flag colors */
 .theme-pride {
-  --rainbow-gradient: linear-gradient(
-    135deg,
-    #ff6b6b 0%,
-    #ffd93d 17%,
-    #6bcb77 33%,
-    #4d96ff 50%,
-    #9b59b6 67%,
-    #ff6b6b 83%,
-    #ffd93d 100%
+  /* Classic 6-stripe Pride flag colors */
+  --pride-red: #E40303;
+  --pride-orange: #FF8C00;
+  --pride-yellow: #FFED00;
+  --pride-green: #008026;
+  --pride-blue: #24408E;
+  --pride-purple: #732982;
+
+  /* Static gradient for text - shows all colors at once */
+  --pride-gradient: linear-gradient(
+    90deg,
+    var(--pride-red) 0%,
+    var(--pride-orange) 20%,
+    var(--pride-yellow) 40%,
+    var(--pride-green) 60%,
+    var(--pride-blue) 80%,
+    var(--pride-purple) 100%
+  );
+
+  /* Animated gradient for borders */
+  --pride-gradient-animated: linear-gradient(
+    90deg,
+    var(--pride-red) 0%,
+    var(--pride-orange) 16.66%,
+    var(--pride-yellow) 33.33%,
+    var(--pride-green) 50%,
+    var(--pride-blue) 66.66%,
+    var(--pride-purple) 83.33%,
+    var(--pride-red) 100%
   );
 }
 
 .theme-pride .hero-title {
-  background: var(--rainbow-gradient) !important;
-  background-size: 300% auto !important;
+  background: var(--pride-gradient) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
-  animation: rainbow-flow 4s linear infinite !important;
+  animation: none !important;
 }
 
 .theme-pride .nav-logo {
-  background: var(--rainbow-gradient) !important;
-  background-size: 300% auto !important;
+  background: var(--pride-gradient) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
-  animation: rainbow-flow 4s linear infinite !important;
+  animation: none !important;
 }
 
-@keyframes rainbow-flow {
-  0% { background-position: 0% center; }
-  100% { background-position: 300% center; }
-}
-
-/* Pride progress bar / border */
+/* Pride progress bar / border - slow gentle animation */
 .theme-pride .navbar::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: var(--rainbow-gradient);
-  background-size: 300% auto;
-  animation: rainbow-flow 4s linear infinite;
+  height: 4px;
+  background: var(--pride-gradient-animated);
+  background-size: 200% 100%;
+  animation: pride-shimmer 8s linear infinite;
+}
+
+@keyframes pride-shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 
 /* Theme indicator badge */
