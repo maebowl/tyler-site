@@ -536,7 +536,7 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
               onUpload={(url) => addMediaToNew('image', url)}
             />
             <FileUpload
-              accept="video/mp4"
+              accept="video/mp4,video/webm,video/x-matroska,.mkv"
               label="+ Add Video"
               githubToken={githubToken}
               onUpload={(url) => addMediaToNew('video', url)}
@@ -594,7 +594,7 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
                         onUpload={(url) => addMediaToEditing('image', url)}
                       />
                       <FileUpload
-                        accept="video/mp4"
+                        accept="video/mp4,video/webm,video/x-matroska,.mkv"
                         label="+ Add Video"
                         githubToken={githubToken}
                         onUpload={(url) => addMediaToEditing('video', url)}
@@ -769,12 +769,12 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject, g
         </div>
         <div className="media-input-group">
           <input
-            placeholder="MP4 Video URL (optional, takes priority)"
+            placeholder="Video URL (MP4/WebM/MKV, optional)"
             value={newProject.videoUrl}
             onChange={(e) => setNewProject({ ...newProject, videoUrl: e.target.value })}
           />
           <FileUpload
-            accept="video/mp4"
+            accept="video/mp4,video/webm,video/x-matroska,.mkv"
             label="Upload Video"
             githubToken={githubToken}
             onUpload={(url) => setNewProject({ ...newProject, videoUrl: url })}
@@ -815,10 +815,10 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject, g
                   <input
                     value={editing.videoUrl || ''}
                     onChange={(e) => setEditing({ ...editing, videoUrl: e.target.value })}
-                    placeholder="MP4 Video URL (optional)"
+                    placeholder="Video URL (MP4/WebM/MKV)"
                   />
                   <FileUpload
-                    accept="video/mp4"
+                    accept="video/mp4,video/webm,video/x-matroska,.mkv"
                     label="Upload Video"
                     githubToken={githubToken}
                     onUpload={(url) => setEditing({ ...editing, videoUrl: url })}
