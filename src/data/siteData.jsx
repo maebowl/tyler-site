@@ -41,6 +41,11 @@ const defaultData = {
                   "image": "/uploads/1768599599069-mabelwallin-com88x31.gif",
                   "url": "https://mabelwallin.com",
                   "alt": "traaaaaaaans"
+              },
+              {
+                  "image": "https://mabelwallin.com/uploads/1768557812569-IMG_1919.gif",
+                  "url": "https://www.youtube.com/c/scottthewoz",
+                  "alt": "ScottWoz"
               }
           ]
       },
