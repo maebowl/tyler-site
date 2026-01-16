@@ -126,7 +126,7 @@ function Contact() {
                 <div className="social-info">
                   <span className="social-tagline">{getTagline(social.id)}</span>
                   <span className="social-name">{social.name}</span>
-                  <span className="social-handle">@{social.handle}</span>
+                  <span className="social-handle">{social.handle}</span>
                 </div>
                 <div className="social-arrow">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
