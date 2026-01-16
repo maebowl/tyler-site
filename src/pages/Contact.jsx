@@ -93,7 +93,7 @@ function Contact() {
               <div className="featured-info">
                 <span className="featured-tagline">{getTagline(featuredSocial.id)}</span>
                 <span className="featured-name">{featuredSocial.name}</span>
-                <span className="featured-handle">@{featuredSocial.handle}</span>
+                <span className="featured-handle">{featuredSocial.handle}</span>
               </div>
             </div>
             <div className="featured-cta">
