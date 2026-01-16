@@ -3,7 +3,7 @@ import { useSiteData } from '../data/siteData'
 import './Projects.css'
 
 function Projects() {
-  const { projects } = useSiteData()
+  const { projects, siteSettings } = useSiteData()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -13,9 +13,9 @@ function Projects() {
     <div className="projects-page">
       <div className="page-container">
         <header className="page-header">
-          <h1 className="page-title">Blender Projects</h1>
+          <h1 className="page-title">{siteSettings.projects.title}</h1>
           <p className="page-intro">
-            Yes, I've made the donut. No, I won't stop there.
+            {siteSettings.projects.intro}
           </p>
         </header>
         <div className="projects-grid">

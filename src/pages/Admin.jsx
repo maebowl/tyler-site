@@ -18,7 +18,8 @@ function Admin() {
   const [saveStatus, setSaveStatus] = useState('')
 
   const {
-    videos, projects, songs, posts, socials,
+    siteSettings, videos, projects, songs, posts, socials,
+    updateSiteSettings,
     addVideo, updateVideo, deleteVideo,
     addProject, updateProject, deleteProject,
     addSong, updateSong, deleteSong,
@@ -70,7 +71,7 @@ function Admin() {
     setSaveStatus('')
 
     try {
-      await saveToGitHub({ videos, projects, songs, posts, socials }, githubToken)
+      await saveToGitHub({ siteSettings, videos, projects, songs, posts, socials }, githubToken)
       setSaveStatus('Saved to GitHub! Site will rebuild shortly.')
     } catch (err) {
       setSaveStatus(`Error: ${err.message}`)
@@ -145,6 +146,12 @@ function Admin() {
 
         <div className="admin-tabs">
           <button
+            className={`tab ${activeTab === 'settings' ? 'active' : ''}`}
+            onClick={() => setActiveTab('settings')}
+          >
+            Site Settings
+          </button>
+          <button
             className={`tab ${activeTab === 'posts' ? 'active' : ''}`}
             onClick={() => setActiveTab('posts')}
           >
@@ -177,6 +184,9 @@ function Admin() {
         </div>
 
         <div className="admin-content">
+          {activeTab === 'settings' && (
+            <SiteSettingsManager siteSettings={siteSettings} updateSiteSettings={updateSiteSettings} />
+          )}
           {activeTab === 'posts' && (
             <PostsManager posts={posts} addPost={addPost} updatePost={updatePost} deletePost={deletePost} />
           )}
@@ -192,6 +202,137 @@ function Admin() {
           {activeTab === 'socials' && (
             <SocialsManager socials={socials} updateSocial={updateSocial} />
           )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function SiteSettingsManager({ siteSettings, updateSiteSettings }) {
+  return (
+    <div className="manager">
+      <h2>Site Settings</h2>
+      <p className="manager-note">Customize page titles, subtitles, and intro text.</p>
+
+      <div className="settings-section">
+        <h3>Home Page (Hero)</h3>
+        <div className="settings-fields">
+          <label>
+            <span>Greeting</span>
+            <input
+              value={siteSettings.hero.greeting}
+              onChange={(e) => updateSiteSettings('hero', { greeting: e.target.value })}
+              placeholder="Hi, I'm"
+            />
+          </label>
+          <label>
+            <span>Name</span>
+            <input
+              value={siteSettings.hero.name}
+              onChange={(e) => updateSiteSettings('hero', { name: e.target.value })}
+              placeholder="Your Name"
+            />
+          </label>
+          <label>
+            <span>Subtitle</span>
+            <input
+              value={siteSettings.hero.subtitle}
+              onChange={(e) => updateSiteSettings('hero', { subtitle: e.target.value })}
+              placeholder="Creative developer & 3D artist"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h3>Projects Page</h3>
+        <div className="settings-fields">
+          <label>
+            <span>Title</span>
+            <input
+              value={siteSettings.projects.title}
+              onChange={(e) => updateSiteSettings('projects', { title: e.target.value })}
+              placeholder="Projects"
+            />
+          </label>
+          <label>
+            <span>Intro Text</span>
+            <textarea
+              value={siteSettings.projects.intro}
+              onChange={(e) => updateSiteSettings('projects', { intro: e.target.value })}
+              placeholder="Page introduction..."
+              rows={2}
+            />
+          </label>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h3>Music Page</h3>
+        <div className="settings-fields">
+          <label>
+            <span>Title</span>
+            <input
+              value={siteSettings.music.title}
+              onChange={(e) => updateSiteSettings('music', { title: e.target.value })}
+              placeholder="Music"
+            />
+          </label>
+          <label>
+            <span>Intro Text</span>
+            <textarea
+              value={siteSettings.music.intro}
+              onChange={(e) => updateSiteSettings('music', { intro: e.target.value })}
+              placeholder="Page introduction..."
+              rows={2}
+            />
+          </label>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h3>Videos Page</h3>
+        <div className="settings-fields">
+          <label>
+            <span>Title</span>
+            <input
+              value={siteSettings.videos.title}
+              onChange={(e) => updateSiteSettings('videos', { title: e.target.value })}
+              placeholder="Videos"
+            />
+          </label>
+          <label>
+            <span>Intro Text</span>
+            <textarea
+              value={siteSettings.videos.intro}
+              onChange={(e) => updateSiteSettings('videos', { intro: e.target.value })}
+              placeholder="Page introduction..."
+              rows={2}
+            />
+          </label>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h3>Contact Page</h3>
+        <div className="settings-fields">
+          <label>
+            <span>Title</span>
+            <input
+              value={siteSettings.contact.title}
+              onChange={(e) => updateSiteSettings('contact', { title: e.target.value })}
+              placeholder="Contact"
+            />
+          </label>
+          <label>
+            <span>Intro Text</span>
+            <textarea
+              value={siteSettings.contact.intro}
+              onChange={(e) => updateSiteSettings('contact', { intro: e.target.value })}
+              placeholder="Page introduction..."
+              rows={2}
+            />
+          </label>
         </div>
       </div>
     </div>

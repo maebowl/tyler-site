@@ -26,7 +26,7 @@ const socialIcons = {
 }
 
 function Contact() {
-  const { socials } = useSiteData()
+  const { socials, siteSettings } = useSiteData()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -36,9 +36,9 @@ function Contact() {
     <div className="contact-page">
       <div className="page-container">
         <header className="page-header">
-          <h1 className="page-title">Contact</h1>
+          <h1 className="page-title">{siteSettings.contact.title}</h1>
           <p className="page-intro">
-            Come hang out, talk retro games, or watch me fail at whatever I'm doing.
+            {siteSettings.contact.intro}
           </p>
         </header>
         <div className="socials-grid">

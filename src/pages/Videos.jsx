@@ -17,7 +17,7 @@ function getYouTubeId(url) {
 }
 
 function Videos() {
-  const { videos } = useSiteData()
+  const { videos, siteSettings } = useSiteData()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -27,9 +27,9 @@ function Videos() {
     <div className="videos-page">
       <div className="page-container">
         <header className="page-header">
-          <h1 className="page-title">Videos</h1>
+          <h1 className="page-title">{siteSettings.videos.title}</h1>
           <p className="page-intro">
-            Check out some of my favorite videos and content.
+            {siteSettings.videos.intro}
           </p>
         </header>
         <div className="videos-grid">

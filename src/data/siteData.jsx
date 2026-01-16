@@ -1,6 +1,29 @@
 import { createContext, useContext, useState } from 'react'
 
 const defaultData = {
+  siteSettings: {
+    hero: {
+      greeting: "Hi, I'm",
+      name: "Tyler Richardson",
+      subtitle: "Creative developer & 3D artist"
+    },
+    projects: {
+      title: "Blender Projects",
+      intro: "Yes, I've made the donut. No, I won't stop there."
+    },
+    music: {
+      title: "Favorite Songs",
+      intro: "What's on rotation while I'm drumming, gaming, or pretending to practice bass."
+    },
+    videos: {
+      title: "Videos",
+      intro: "Check out some of my favorite videos and content."
+    },
+    contact: {
+      title: "Contact",
+      intro: "Come hang out, talk retro games, or watch me fail at whatever I'm doing."
+    }
+  },
   videos: [
       {
           "id": 1,
@@ -164,6 +187,16 @@ export function SiteDataProvider({ children }) {
     }))
   }
 
+  const updateSiteSettings = (section, updates) => {
+    setData(prev => ({
+      ...prev,
+      siteSettings: {
+        ...prev.siteSettings,
+        [section]: { ...prev.siteSettings[section], ...updates }
+      }
+    }))
+  }
+
   const resetToDefaults = () => {
     setData(defaultData)
   }
@@ -189,6 +222,7 @@ export function SiteDataProvider({ children }) {
       updatePost,
       deletePost,
       updateSocial,
+      updateSiteSettings,
       resetToDefaults,
     }}>
       {children}
