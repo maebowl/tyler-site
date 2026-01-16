@@ -139,6 +139,13 @@ const defaultData = {
           "artist": "Nightmargin",
           "youtubeUrl": "https://www.youtube.com/watch?v=z9-6ZAVOwHo",
           "id": 6
+      },
+      {
+          "title": "Amoeba",
+          "artist": "Clairo",
+          "youtubeUrl": "",
+          "audioUrl": "/uploads/1768603176975-SpotiDown.App_-_Amoeba_-_Recorded_At_Electric_Lady_Studios_-_Clairo.mp3",
+          "id": 7
       }
   ],
   posts: [],
