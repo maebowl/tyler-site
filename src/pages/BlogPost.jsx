@@ -35,6 +35,23 @@ function BlogPost() {
             </time>
             <h1 className="post-title">{post.title}</h1>
           </header>
+          {(post.imageUrl || post.videoUrl) && (
+            <div className="post-media">
+              {post.videoUrl ? (
+                <video
+                  src={post.videoUrl}
+                  controls
+                  className="post-video"
+                />
+              ) : (
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
+                  className="post-image"
+                />
+              )}
+            </div>
+          )}
           <div
             className="post-body"
             dangerouslySetInnerHTML={{ __html: post.content }}

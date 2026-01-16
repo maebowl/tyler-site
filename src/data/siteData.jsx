@@ -36,7 +36,9 @@ const defaultData = {
       {
           "title": "Donut",
           "description": "It's the donut. you know the one.",
-          "id": 1
+          "id": 1,
+          "imageUrl": "",
+          "videoUrl": ""
       }
   ],
   songs: [

@@ -53,6 +53,25 @@
   line-height: 1.2;
 }
 
+.post-media {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.post-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .post-body {
   font-size: 1.0625rem;
   line-height: 1.8;

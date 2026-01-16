@@ -25,10 +25,27 @@ function Projects() {
               className="project-card"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="project-image">
-                <div className="placeholder-art">
-                  <span className="placeholder-text">Coming Soon</span>
-                </div>
+              <div className="project-media">
+                {project.videoUrl ? (
+                  <video
+                    src={project.videoUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="project-video"
+                  />
+                ) : project.imageUrl ? (
+                  <img
+                    src={project.imageUrl}
+                    alt={project.title}
+                    className="project-image"
+                  />
+                ) : (
+                  <div className="placeholder-art">
+                    <span className="placeholder-text">Coming Soon</span>
+                  </div>
+                )}
               </div>
               <div className="project-info">
                 <h3 className="project-title">{project.title}</h3>

@@ -341,7 +341,7 @@ function SiteSettingsManager({ siteSettings, updateSiteSettings }) {
 
 function PostsManager({ posts, addPost, updatePost, deletePost }) {
   const [editing, setEditing] = useState(null)
-  const [newPost, setNewPost] = useState({ slug: '', title: '', date: '', excerpt: '', content: '' })
+  const [newPost, setNewPost] = useState({ slug: '', title: '', date: '', excerpt: '', content: '', imageUrl: '', videoUrl: '' })
 
   const handleAdd = () => {
     if (!newPost.slug || !newPost.title) return
@@ -349,7 +349,7 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
       ...newPost,
       date: newPost.date || new Date().toISOString().split('T')[0]
     })
-    setNewPost({ slug: '', title: '', date: '', excerpt: '', content: '' })
+    setNewPost({ slug: '', title: '', date: '', excerpt: '', content: '', imageUrl: '', videoUrl: '' })
   }
 
   const handleUpdate = (slug) => {
@@ -360,6 +360,7 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
   return (
     <div className="manager">
       <h2>Blog Posts</h2>
+      <p className="manager-note">Add an image URL or MP4 video URL to display featured media at the top of posts.</p>
 
       <div className="add-form">
         <h3>Add New Post</h3>
@@ -383,6 +384,16 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
           value={newPost.excerpt}
           onChange={(e) => setNewPost({ ...newPost, excerpt: e.target.value })}
         />
+        <input
+          placeholder="Featured Image URL (optional)"
+          value={newPost.imageUrl}
+          onChange={(e) => setNewPost({ ...newPost, imageUrl: e.target.value })}
+        />
+        <input
+          placeholder="Featured MP4 Video URL (optional, takes priority over image)"
+          value={newPost.videoUrl}
+          onChange={(e) => setNewPost({ ...newPost, videoUrl: e.target.value })}
+        />
         <textarea
           placeholder="Content (HTML supported)"
           value={newPost.content}
@@ -400,6 +411,7 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
                 <input
                   value={editing.title}
                   onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                  placeholder="Title"
                 />
                 <input
                   type="date"
@@ -409,6 +421,17 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
                 <input
                   value={editing.excerpt}
                   onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })}
+                  placeholder="Excerpt"
+                />
+                <input
+                  value={editing.imageUrl || ''}
+                  onChange={(e) => setEditing({ ...editing, imageUrl: e.target.value })}
+                  placeholder="Featured Image URL (optional)"
+                />
+                <input
+                  value={editing.videoUrl || ''}
+                  onChange={(e) => setEditing({ ...editing, videoUrl: e.target.value })}
+                  placeholder="Featured MP4 Video URL (optional)"
                 />
                 <textarea
                   value={editing.content}
@@ -426,6 +449,8 @@ function PostsManager({ posts, addPost, updatePost, deletePost }) {
                   <strong>{post.title}</strong>
                   <span className="item-meta">/{post.slug} - {post.date}</span>
                   <p>{post.excerpt}</p>
+                  {post.imageUrl && <span className="item-meta item-url">Image: {post.imageUrl}</span>}
+                  {post.videoUrl && <span className="item-meta item-url">Video: {post.videoUrl}</span>}
                 </div>
                 <div className="item-actions">
                   <button onClick={() => setEditing({ ...post })}>Edit</button>
@@ -526,12 +551,12 @@ function VideosManager({ videos, addVideo, updateVideo, deleteVideo }) {
 
 function ProjectsManager({ projects, addProject, updateProject, deleteProject }) {
   const [editing, setEditing] = useState(null)
-  const [newProject, setNewProject] = useState({ title: '', description: '' })
+  const [newProject, setNewProject] = useState({ title: '', description: '', imageUrl: '', videoUrl: '' })
 
   const handleAdd = () => {
     if (!newProject.title) return
     addProject(newProject)
-    setNewProject({ title: '', description: '' })
+    setNewProject({ title: '', description: '', imageUrl: '', videoUrl: '' })
   }
 
   const handleUpdate = (id) => {
@@ -542,6 +567,7 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject })
   return (
     <div className="manager">
       <h2>Blender Projects</h2>
+      <p className="manager-note">Add an image URL or MP4 video URL to display media. Video takes priority if both are set.</p>
 
       <div className="add-form">
         <h3>Add New Project</h3>
@@ -555,6 +581,16 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject })
           value={newProject.description}
           onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
         />
+        <input
+          placeholder="Image URL (optional)"
+          value={newProject.imageUrl}
+          onChange={(e) => setNewProject({ ...newProject, imageUrl: e.target.value })}
+        />
+        <input
+          placeholder="MP4 Video URL (optional, takes priority over image)"
+          value={newProject.videoUrl}
+          onChange={(e) => setNewProject({ ...newProject, videoUrl: e.target.value })}
+        />
         <button onClick={handleAdd}>Add Project</button>
       </div>
 
@@ -566,10 +602,22 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject })
                 <input
                   value={editing.title}
                   onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                  placeholder="Title"
                 />
                 <input
                   value={editing.description}
                   onChange={(e) => setEditing({ ...editing, description: e.target.value })}
+                  placeholder="Description"
+                />
+                <input
+                  value={editing.imageUrl || ''}
+                  onChange={(e) => setEditing({ ...editing, imageUrl: e.target.value })}
+                  placeholder="Image URL (optional)"
+                />
+                <input
+                  value={editing.videoUrl || ''}
+                  onChange={(e) => setEditing({ ...editing, videoUrl: e.target.value })}
+                  placeholder="MP4 Video URL (optional)"
                 />
                 <div className="item-actions">
                   <button onClick={() => handleUpdate(project.id)}>Save</button>
@@ -581,6 +629,8 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject })
                 <div className="item-info">
                   <strong>{project.title}</strong>
                   <p>{project.description}</p>
+                  {project.imageUrl && <span className="item-meta item-url">Image: {project.imageUrl}</span>}
+                  {project.videoUrl && <span className="item-meta item-url">Video: {project.videoUrl}</span>}
                 </div>
                 <div className="item-actions">
                   <button onClick={() => setEditing({ ...project })}>Edit</button>
