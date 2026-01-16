@@ -48,9 +48,24 @@ const defaultData = {
                   "alt": "ScottWoz"
               },
               {
-                  "image": "https://zenoslots.net/IMAGES/BUTTONS/ZENOSLOTS_Mini.png",
-                  "url": "https://zenoslots.net",
-                  "alt": "zenoslots"
+                  "image": "https://notnite.com/buttons/blender.gif",
+                  "url": "https://www.blender.org/",
+                  "alt": "blender"
+              },
+              {
+                  "image": "https://notnite.com/buttons/jellyfin.gif",
+                  "url": "https://jellyfin.org",
+                  "alt": "jellyfin"
+              },
+              {
+                  "image": "https://notnite.com/buttons/notnite.png",
+                  "url": "https://notnite.com/",
+                  "alt": "notnite"
+              },
+              {
+                  "image": "https://notnite.com/buttons/qbittorrent.png",
+                  "url": "https://www.qbittorrent.org/",
+                  "alt": "qbit"
               }
           ]
       },
@@ -62,13 +77,6 @@ const defaultData = {
   videos: [],
   projects: [
       {
-          "title": "Fluid Simulation",
-          "description": "this took so goddamn long to render",
-          "imageUrl": "",
-          "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
-          "id": 2
-      },
-      {
           "title": "The Donut",
           "description": "you know the one.",
           "imageUrl": "/uploads/1768541664379-image.png",
@@ -76,11 +84,11 @@ const defaultData = {
           "id": 1
       },
       {
-          "title": "Monitor",
-          "description": "i had to",
+          "title": "Fluid Simulation",
+          "description": "this took so goddamn long to render",
           "imageUrl": "",
-          "videoUrl": "/uploads/1768600668799-0001-0250.mkv",
-          "id": 3
+          "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
+          "id": 2
       }
   ],
   songs: [
