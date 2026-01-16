@@ -40,8 +40,6 @@ function Music() {
   const handleSongClick = (song) => {
     if (song.youtubeUrl) {
       setActiveVideo(song)
-      // Dispatch event to pause record player
-      window.dispatchEvent(new CustomEvent('modalMediaOpen'))
     }
   }
 
