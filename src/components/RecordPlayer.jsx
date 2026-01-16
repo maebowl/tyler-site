@@ -23,6 +23,14 @@ export default function RecordPlayer() {
     }
   }, [volume])
 
+  // Auto-play first song on mount
+  useEffect(() => {
+    if (playableSongs.length > 0 && audioRef.current) {
+      setIsPlaying(true)
+      audioRef.current.play().catch(() => setIsPlaying(false))
+    }
+  }, [playableSongs.length])
+
   useEffect(() => {
     if (isPlaying) {
       setArmPosition('playing')
