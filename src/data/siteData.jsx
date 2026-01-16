@@ -141,8 +141,8 @@ const defaultData = {
       {
           "id": "bluesky",
           "name": "Bluesky",
-          "handle": "your-handle",
-          "url": "https://bsky.app/profile/your-handle.bsky.social"
+          "handle": "Nozoa",
+          "url": "https://bsky.app/profile/nozoa.bsky.social"
       }
   ],
 }
