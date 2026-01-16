@@ -21,11 +21,11 @@ function Admin() {
   const {
     siteSettings, videos, projects, songs, posts, socials,
     updateSiteSettings,
-    addVideo, updateVideo, deleteVideo,
-    addProject, updateProject, deleteProject,
-    addSong, updateSong, deleteSong,
-    addPost, updatePost, deletePost,
-    updateSocial, resetToDefaults
+    updateVideos, addVideo, updateVideo, deleteVideo,
+    updateProjects, addProject, updateProject, deleteProject,
+    updateSongs, addSong, updateSong, deleteSong,
+    updatePosts, addPost, updatePost, deletePost,
+    updateSocials, updateSocial, resetToDefaults
   } = useSiteData()
 
   useEffect(() => {
@@ -201,19 +201,19 @@ function Admin() {
             <SiteSettingsManager siteSettings={siteSettings} updateSiteSettings={updateSiteSettings} />
           )}
           {activeTab === 'posts' && (
-            <PostsManager posts={posts} addPost={addPost} updatePost={updatePost} deletePost={deletePost} githubToken={githubToken} />
+            <PostsManager posts={posts} addPost={addPost} updatePost={updatePost} deletePost={deletePost} updatePosts={updatePosts} githubToken={githubToken} />
           )}
           {activeTab === 'videos' && (
-            <VideosManager videos={videos} addVideo={addVideo} updateVideo={updateVideo} deleteVideo={deleteVideo} />
+            <VideosManager videos={videos} addVideo={addVideo} updateVideo={updateVideo} deleteVideo={deleteVideo} updateVideos={updateVideos} />
           )}
           {activeTab === 'projects' && (
-            <ProjectsManager projects={projects} addProject={addProject} updateProject={updateProject} deleteProject={deleteProject} githubToken={githubToken} />
+            <ProjectsManager projects={projects} addProject={addProject} updateProject={updateProject} deleteProject={deleteProject} updateProjects={updateProjects} githubToken={githubToken} />
           )}
           {activeTab === 'songs' && (
-            <SongsManager songs={songs} addSong={addSong} updateSong={updateSong} deleteSong={deleteSong} />
+            <SongsManager songs={songs} addSong={addSong} updateSong={updateSong} deleteSong={deleteSong} updateSongs={updateSongs} />
           )}
           {activeTab === 'socials' && (
-            <SocialsManager socials={socials} updateSocial={updateSocial} />
+            <SocialsManager socials={socials} updateSocial={updateSocial} updateSocials={updateSocials} />
           )}
           {activeTab === 'badges' && (
             <BadgesManager siteSettings={siteSettings} updateSiteSettings={updateSiteSettings} githubToken={githubToken} />
@@ -445,7 +445,7 @@ function SiteSettingsManager({ siteSettings, updateSiteSettings }) {
   )
 }
 
-function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
+function PostsManager({ posts, addPost, updatePost, deletePost, updatePosts, githubToken }) {
   const [editing, setEditing] = useState(null)
   const [newPost, setNewPost] = useState({ slug: '', title: '', date: '', excerpt: '', content: '', media: [] })
 
@@ -489,6 +489,15 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
   const removeMediaFromEditing = (index) => {
     const media = getPostMedia(editing)
     setEditing({ ...editing, media: media.filter((_, i) => i !== index) })
+  }
+
+  const moveItem = (index, direction) => {
+    const newIndex = index + direction
+    if (newIndex < 0 || newIndex >= posts.length) return
+    const newPosts = [...posts]
+    const [removed] = newPosts.splice(index, 1)
+    newPosts.splice(newIndex, 0, removed)
+    updatePosts(newPosts)
   }
 
   return (
@@ -554,7 +563,7 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
       </div>
 
       <div className="items-list">
-        {posts.map((post) => {
+        {posts.map((post, index) => {
           const postMedia = getPostMedia(post)
 
           return (
@@ -614,6 +623,10 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
                 </>
               ) : (
                 <>
+                  <div className="reorder-buttons">
+                    <button onClick={() => moveItem(index, -1)} disabled={index === 0} className="btn-reorder" title="Move up">▲</button>
+                    <button onClick={() => moveItem(index, 1)} disabled={index === posts.length - 1} className="btn-reorder" title="Move down">▼</button>
+                  </div>
                   <div className="item-info">
                     <strong>{post.title}</strong>
                     <span className="item-meta">/{post.slug} - {post.date}</span>
@@ -638,7 +651,7 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
   )
 }
 
-function VideosManager({ videos, addVideo, updateVideo, deleteVideo }) {
+function VideosManager({ videos, addVideo, updateVideo, deleteVideo, updateVideos }) {
   const [editing, setEditing] = useState(null)
   const [newVideo, setNewVideo] = useState({ title: '', subtitle: '', youtubeUrl: '' })
 
@@ -651,6 +664,15 @@ function VideosManager({ videos, addVideo, updateVideo, deleteVideo }) {
   const handleUpdate = (id) => {
     updateVideo(id, editing)
     setEditing(null)
+  }
+
+  const moveItem = (index, direction) => {
+    const newIndex = index + direction
+    if (newIndex < 0 || newIndex >= videos.length) return
+    const newVideos = [...videos]
+    const [removed] = newVideos.splice(index, 1)
+    newVideos.splice(newIndex, 0, removed)
+    updateVideos(newVideos)
   }
 
   return (
@@ -678,7 +700,7 @@ function VideosManager({ videos, addVideo, updateVideo, deleteVideo }) {
       </div>
 
       <div className="items-list">
-        {videos.map((video) => (
+        {videos.map((video, index) => (
           <div key={video.id} className="item">
             {editing?.id === video.id ? (
               <>
@@ -704,6 +726,10 @@ function VideosManager({ videos, addVideo, updateVideo, deleteVideo }) {
               </>
             ) : (
               <>
+                <div className="reorder-buttons">
+                  <button onClick={() => moveItem(index, -1)} disabled={index === 0} className="btn-reorder" title="Move up">▲</button>
+                  <button onClick={() => moveItem(index, 1)} disabled={index === videos.length - 1} className="btn-reorder" title="Move down">▼</button>
+                </div>
                 <div className="item-info">
                   <strong>{video.title}</strong>
                   <span className="item-meta">{video.subtitle}</span>
@@ -722,7 +748,7 @@ function VideosManager({ videos, addVideo, updateVideo, deleteVideo }) {
   )
 }
 
-function ProjectsManager({ projects, addProject, updateProject, deleteProject, githubToken }) {
+function ProjectsManager({ projects, addProject, updateProject, deleteProject, updateProjects, githubToken }) {
   const [editing, setEditing] = useState(null)
   const [newProject, setNewProject] = useState({ title: '', description: '', imageUrl: '', videoUrl: '' })
 
@@ -735,6 +761,15 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject, g
   const handleUpdate = (id) => {
     updateProject(id, editing)
     setEditing(null)
+  }
+
+  const moveItem = (index, direction) => {
+    const newIndex = index + direction
+    if (newIndex < 0 || newIndex >= projects.length) return
+    const newProjects = [...projects]
+    const [removed] = newProjects.splice(index, 1)
+    newProjects.splice(newIndex, 0, removed)
+    updateProjects(newProjects)
   }
 
   return (
@@ -784,7 +819,7 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject, g
       </div>
 
       <div className="items-list">
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <div key={project.id} className="item">
             {editing?.id === project.id ? (
               <>
@@ -831,6 +866,10 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject, g
               </>
             ) : (
               <>
+                <div className="reorder-buttons">
+                  <button onClick={() => moveItem(index, -1)} disabled={index === 0} className="btn-reorder" title="Move up">▲</button>
+                  <button onClick={() => moveItem(index, 1)} disabled={index === projects.length - 1} className="btn-reorder" title="Move down">▼</button>
+                </div>
                 <div className="item-info">
                   <strong>{project.title}</strong>
                   <p>{project.description}</p>
@@ -850,7 +889,7 @@ function ProjectsManager({ projects, addProject, updateProject, deleteProject, g
   )
 }
 
-function SongsManager({ songs, addSong, updateSong, deleteSong }) {
+function SongsManager({ songs, addSong, updateSong, deleteSong, updateSongs }) {
   const [editing, setEditing] = useState(null)
   const [newSong, setNewSong] = useState({ title: '', artist: '', youtubeUrl: '' })
 
@@ -863,6 +902,15 @@ function SongsManager({ songs, addSong, updateSong, deleteSong }) {
   const handleUpdate = (id) => {
     updateSong(id, editing)
     setEditing(null)
+  }
+
+  const moveItem = (index, direction) => {
+    const newIndex = index + direction
+    if (newIndex < 0 || newIndex >= songs.length) return
+    const newSongs = [...songs]
+    const [removed] = newSongs.splice(index, 1)
+    newSongs.splice(newIndex, 0, removed)
+    updateSongs(newSongs)
   }
 
   return (
@@ -890,7 +938,7 @@ function SongsManager({ songs, addSong, updateSong, deleteSong }) {
       </div>
 
       <div className="items-list">
-        {songs.map((song) => (
+        {songs.map((song, index) => (
           <div key={song.id} className="item">
             {editing?.id === song.id ? (
               <>
@@ -916,6 +964,10 @@ function SongsManager({ songs, addSong, updateSong, deleteSong }) {
               </>
             ) : (
               <>
+                <div className="reorder-buttons">
+                  <button onClick={() => moveItem(index, -1)} disabled={index === 0} className="btn-reorder" title="Move up">▲</button>
+                  <button onClick={() => moveItem(index, 1)} disabled={index === songs.length - 1} className="btn-reorder" title="Move down">▼</button>
+                </div>
                 <div className="item-info">
                   <strong>{song.title}</strong>
                   <span className="item-meta">{song.artist}</span>
@@ -934,7 +986,7 @@ function SongsManager({ songs, addSong, updateSong, deleteSong }) {
   )
 }
 
-function SocialsManager({ socials, updateSocial }) {
+function SocialsManager({ socials, updateSocial, updateSocials }) {
   const [editing, setEditing] = useState(null)
 
   const handleUpdate = (id) => {
@@ -942,13 +994,22 @@ function SocialsManager({ socials, updateSocial }) {
     setEditing(null)
   }
 
+  const moveItem = (index, direction) => {
+    const newIndex = index + direction
+    if (newIndex < 0 || newIndex >= socials.length) return
+    const newSocials = [...socials]
+    const [removed] = newSocials.splice(index, 1)
+    newSocials.splice(newIndex, 0, removed)
+    updateSocials(newSocials)
+  }
+
   return (
     <div className="manager">
       <h2>Contact Links</h2>
-      <p className="manager-note">Edit your social media links and handles.</p>
+      <p className="manager-note">Edit your social media links and handles. Reorder to change display order (first item is featured).</p>
 
       <div className="items-list">
-        {socials.map((social) => (
+        {socials.map((social, index) => (
           <div key={social.id} className="item">
             {editing?.id === social.id ? (
               <>
@@ -974,8 +1035,13 @@ function SocialsManager({ socials, updateSocial }) {
               </>
             ) : (
               <>
+                <div className="reorder-buttons">
+                  <button onClick={() => moveItem(index, -1)} disabled={index === 0} className="btn-reorder" title="Move up">▲</button>
+                  <button onClick={() => moveItem(index, 1)} disabled={index === socials.length - 1} className="btn-reorder" title="Move down">▼</button>
+                </div>
                 <div className="item-info">
                   <strong>{social.name}</strong>
+                  {index === 0 && <span className="featured-badge">Featured</span>}
                   <span className="item-meta">{social.handle}</span>
                   <span className="item-meta">{social.url}</span>
                 </div>
