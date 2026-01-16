@@ -241,11 +241,11 @@
 }
 
 .tone-arm.playing {
-  transform: rotate(-30deg);
+  transform: rotate(30deg);
 }
 
 .tone-arm.lifting {
-  transform: rotate(-15deg);
+  transform: rotate(15deg);
 }
 
 .arm-base {
