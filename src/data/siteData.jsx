@@ -62,18 +62,18 @@ const defaultData = {
   videos: [],
   projects: [
       {
-          "title": "The Donut",
-          "description": "you know the one.",
-          "imageUrl": "/uploads/1768541664379-image.png",
-          "videoUrl": "/uploads/1768541637397-ezgif-6c2ae73cef5eec86.mp4",
-          "id": 1
-      },
-      {
           "title": "Fluid Simulation",
           "description": "this took so goddamn long to render",
           "imageUrl": "",
           "videoUrl": "/uploads/1768542204017-8mb.video-PUP-8GLXv6yL.mp4",
           "id": 2
+      },
+      {
+          "title": "The Donut",
+          "description": "you know the one.",
+          "imageUrl": "/uploads/1768541664379-image.png",
+          "videoUrl": "/uploads/1768541637397-ezgif-6c2ae73cef5eec86.mp4",
+          "id": 1
       },
       {
           "title": "Monitor",
