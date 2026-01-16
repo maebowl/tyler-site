@@ -23,6 +23,30 @@
   }
 }
 
+/* Christmas Theme - Festive title */
+.theme-christmas .hero-title {
+  background: linear-gradient(135deg, #e74c3c 0%, #27ae60 50%, #e74c3c 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: christmas-shimmer 4s linear infinite !important;
+}
+
+.theme-christmas .nav-logo {
+  background: linear-gradient(135deg, #e74c3c 0%, #27ae60 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: christmas-shimmer 4s linear infinite !important;
+}
+
+@keyframes christmas-shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
 /* Halloween Theme - Spooky glow */
 .theme-halloween {
   --spooky-glow: 0 0 20px rgba(255, 107, 0, 0.3);
@@ -30,11 +54,13 @@
 
 .theme-halloween .hero-title,
 .theme-halloween .page-title {
-  text-shadow: var(--spooky-glow);
+  text-shadow: var(--spooky-glow) !important;
+  color: #ff6b00 !important;
 }
 
 .theme-halloween .nav-logo {
-  text-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
+  text-shadow: 0 0 10px rgba(155, 89, 182, 0.5) !important;
+  color: #9b59b6 !important;
 }
 
 /* Birthday Theme - Confetti and sparkles */
@@ -59,12 +85,21 @@
 }
 
 .theme-birthday .hero-title {
-  background: linear-gradient(135deg, #ff69b4 0%, #ffd700 50%, #ff69b4 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: birthday-shimmer 3s linear infinite;
+  background: linear-gradient(135deg, #ff69b4 0%, #ffd700 50%, #ff69b4 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: birthday-shimmer 3s linear infinite !important;
+}
+
+.theme-birthday .nav-logo {
+  background: linear-gradient(135deg, #ff69b4 0%, #ffd700 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: birthday-shimmer 3s linear infinite !important;
 }
 
 @keyframes birthday-shimmer {
@@ -87,21 +122,21 @@
 }
 
 .theme-pride .hero-title {
-  background: var(--rainbow-gradient);
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: rainbow-flow 4s linear infinite;
+  background: var(--rainbow-gradient) !important;
+  background-size: 300% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: rainbow-flow 4s linear infinite !important;
 }
 
 .theme-pride .nav-logo {
-  background: var(--rainbow-gradient);
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: rainbow-flow 4s linear infinite;
+  background: var(--rainbow-gradient) !important;
+  background-size: 300% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: rainbow-flow 4s linear infinite !important;
 }
 
 @keyframes rainbow-flow {
