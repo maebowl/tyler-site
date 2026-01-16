@@ -389,7 +389,17 @@ function SiteSettingsManager({ siteSettings, updateSiteSettings }) {
 
 function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
   const [editing, setEditing] = useState(null)
-  const [newPost, setNewPost] = useState({ slug: '', title: '', date: '', excerpt: '', content: '', imageUrl: '', videoUrl: '' })
+  const [newPost, setNewPost] = useState({ slug: '', title: '', date: '', excerpt: '', content: '', media: [] })
+
+  // Helper to migrate old posts with imageUrl/videoUrl to new media array format
+  const getPostMedia = (post) => {
+    if (post.media) return post.media
+    // Migrate old format
+    const media = []
+    if (post.imageUrl) media.push({ type: 'image', url: post.imageUrl })
+    if (post.videoUrl) media.push({ type: 'video', url: post.videoUrl })
+    return media
+  }
 
   const handleAdd = () => {
     if (!newPost.slug || !newPost.title) return
@@ -397,7 +407,7 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
       ...newPost,
       date: newPost.date || new Date().toISOString().split('T')[0]
     })
-    setNewPost({ slug: '', title: '', date: '', excerpt: '', content: '', imageUrl: '', videoUrl: '' })
+    setNewPost({ slug: '', title: '', date: '', excerpt: '', content: '', media: [] })
   }
 
   const handleUpdate = (slug) => {
@@ -405,10 +415,28 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
     setEditing(null)
   }
 
+  const addMediaToNew = (type, url) => {
+    setNewPost({ ...newPost, media: [...newPost.media, { type, url }] })
+  }
+
+  const removeMediaFromNew = (index) => {
+    setNewPost({ ...newPost, media: newPost.media.filter((_, i) => i !== index) })
+  }
+
+  const addMediaToEditing = (type, url) => {
+    const media = getPostMedia(editing)
+    setEditing({ ...editing, media: [...media, { type, url }] })
+  }
+
+  const removeMediaFromEditing = (index) => {
+    const media = getPostMedia(editing)
+    setEditing({ ...editing, media: media.filter((_, i) => i !== index) })
+  }
+
   return (
     <div className="manager">
       <h2>Blog Posts</h2>
-      <p className="manager-note">Upload images or MP4 videos, or paste a URL for featured media.</p>
+      <p className="manager-note">Add multiple images and videos to each post.</p>
 
       <div className="add-form">
         <h3>Add New Post</h3>
@@ -432,32 +460,32 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
           value={newPost.excerpt}
           onChange={(e) => setNewPost({ ...newPost, excerpt: e.target.value })}
         />
-        <div className="media-input-group">
-          <input
-            placeholder="Featured Image URL (optional)"
-            value={newPost.imageUrl}
-            onChange={(e) => setNewPost({ ...newPost, imageUrl: e.target.value })}
-          />
-          <FileUpload
-            accept="image/*"
-            label="Upload Image"
-            githubToken={githubToken}
-            onUpload={(url) => setNewPost({ ...newPost, imageUrl: url })}
-          />
+
+        <div className="media-section">
+          <h4>Media ({newPost.media.length})</h4>
+          {newPost.media.map((item, index) => (
+            <div key={index} className="media-item">
+              <span className="media-type">{item.type === 'image' ? '🖼️' : '🎬'}</span>
+              <span className="media-url">{item.url}</span>
+              <button type="button" className="btn-remove" onClick={() => removeMediaFromNew(index)}>×</button>
+            </div>
+          ))}
+          <div className="media-add-row">
+            <FileUpload
+              accept="image/*"
+              label="+ Add Image"
+              githubToken={githubToken}
+              onUpload={(url) => addMediaToNew('image', url)}
+            />
+            <FileUpload
+              accept="video/mp4"
+              label="+ Add Video"
+              githubToken={githubToken}
+              onUpload={(url) => addMediaToNew('video', url)}
+            />
+          </div>
         </div>
-        <div className="media-input-group">
-          <input
-            placeholder="Featured MP4 Video URL (optional, takes priority)"
-            value={newPost.videoUrl}
-            onChange={(e) => setNewPost({ ...newPost, videoUrl: e.target.value })}
-          />
-          <FileUpload
-            accept="video/mp4"
-            label="Upload Video"
-            githubToken={githubToken}
-            onUpload={(url) => setNewPost({ ...newPost, videoUrl: url })}
-          />
-        </div>
+
         <textarea
           placeholder="Content (HTML supported)"
           value={newPost.content}
@@ -468,78 +496,85 @@ function PostsManager({ posts, addPost, updatePost, deletePost, githubToken }) {
       </div>
 
       <div className="items-list">
-        {posts.map((post) => (
-          <div key={post.slug} className="item">
-            {editing?.slug === post.slug ? (
-              <>
-                <input
-                  value={editing.title}
-                  onChange={(e) => setEditing({ ...editing, title: e.target.value })}
-                  placeholder="Title"
-                />
-                <input
-                  type="date"
-                  value={editing.date}
-                  onChange={(e) => setEditing({ ...editing, date: e.target.value })}
-                />
-                <input
-                  value={editing.excerpt}
-                  onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })}
-                  placeholder="Excerpt"
-                />
-                <div className="media-input-group">
+        {posts.map((post) => {
+          const postMedia = getPostMedia(post)
+
+          return (
+            <div key={post.slug} className="item">
+              {editing?.slug === post.slug ? (
+                <>
                   <input
-                    value={editing.imageUrl || ''}
-                    onChange={(e) => setEditing({ ...editing, imageUrl: e.target.value })}
-                    placeholder="Featured Image URL (optional)"
+                    value={editing.title}
+                    onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                    placeholder="Title"
                   />
-                  <FileUpload
-                    accept="image/*"
-                    label="Upload Image"
-                    githubToken={githubToken}
-                    onUpload={(url) => setEditing({ ...editing, imageUrl: url })}
-                  />
-                </div>
-                <div className="media-input-group">
                   <input
-                    value={editing.videoUrl || ''}
-                    onChange={(e) => setEditing({ ...editing, videoUrl: e.target.value })}
-                    placeholder="Featured MP4 Video URL (optional)"
+                    type="date"
+                    value={editing.date}
+                    onChange={(e) => setEditing({ ...editing, date: e.target.value })}
                   />
-                  <FileUpload
-                    accept="video/mp4"
-                    label="Upload Video"
-                    githubToken={githubToken}
-                    onUpload={(url) => setEditing({ ...editing, videoUrl: url })}
+                  <input
+                    value={editing.excerpt}
+                    onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })}
+                    placeholder="Excerpt"
                   />
-                </div>
-                <textarea
-                  value={editing.content}
-                  onChange={(e) => setEditing({ ...editing, content: e.target.value })}
-                  rows={5}
-                />
-                <div className="item-actions">
-                  <button onClick={() => handleUpdate(post.slug)}>Save</button>
-                  <button onClick={() => setEditing(null)}>Cancel</button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="item-info">
-                  <strong>{post.title}</strong>
-                  <span className="item-meta">/{post.slug} - {post.date}</span>
-                  <p>{post.excerpt}</p>
-                  {post.imageUrl && <span className="item-meta item-url">Image: {post.imageUrl}</span>}
-                  {post.videoUrl && <span className="item-meta item-url">Video: {post.videoUrl}</span>}
-                </div>
-                <div className="item-actions">
-                  <button onClick={() => setEditing({ ...post })}>Edit</button>
-                  <button onClick={() => deletePost(post.slug)} className="btn-danger">Delete</button>
-                </div>
-              </>
-            )}
-          </div>
-        ))}
+
+                  <div className="media-section">
+                    <h4>Media ({getPostMedia(editing).length})</h4>
+                    {getPostMedia(editing).map((item, index) => (
+                      <div key={index} className="media-item">
+                        <span className="media-type">{item.type === 'image' ? '🖼️' : '🎬'}</span>
+                        <span className="media-url">{item.url}</span>
+                        <button type="button" className="btn-remove" onClick={() => removeMediaFromEditing(index)}>×</button>
+                      </div>
+                    ))}
+                    <div className="media-add-row">
+                      <FileUpload
+                        accept="image/*"
+                        label="+ Add Image"
+                        githubToken={githubToken}
+                        onUpload={(url) => addMediaToEditing('image', url)}
+                      />
+                      <FileUpload
+                        accept="video/mp4"
+                        label="+ Add Video"
+                        githubToken={githubToken}
+                        onUpload={(url) => addMediaToEditing('video', url)}
+                      />
+                    </div>
+                  </div>
+
+                  <textarea
+                    value={editing.content}
+                    onChange={(e) => setEditing({ ...editing, content: e.target.value })}
+                    rows={5}
+                  />
+                  <div className="item-actions">
+                    <button onClick={() => handleUpdate(post.slug)}>Save</button>
+                    <button onClick={() => setEditing(null)}>Cancel</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="item-info">
+                    <strong>{post.title}</strong>
+                    <span className="item-meta">/{post.slug} - {post.date}</span>
+                    <p>{post.excerpt}</p>
+                    {postMedia.length > 0 && (
+                      <span className="item-meta">
+                        Media: {postMedia.filter(m => m.type === 'image').length} images, {postMedia.filter(m => m.type === 'video').length} videos
+                      </span>
+                    )}
+                  </div>
+                  <div className="item-actions">
+                    <button onClick={() => setEditing({ ...post, media: postMedia })}>Edit</button>
+                    <button onClick={() => deletePost(post.slug)} className="btn-danger">Delete</button>
+                  </div>
+                </>
+              )}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
