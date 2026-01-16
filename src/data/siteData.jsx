@@ -68,9 +68,9 @@ const defaultData = {
   ],
   songs: [
       {
-          "title": "Blackened Banners",
+          "title": "P.A.R.T.Y.",
           "artist": "Alestorm",
-          "youtubeUrl": "https://www.youtube.com/watch?v=nEQ_kV428AU",
+          "youtubeUrl": "https://www.youtube.com/watch?v=EKA3RSgkhq8",
           "id": 1
       },
       {
