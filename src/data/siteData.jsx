@@ -22,7 +22,6 @@ const defaultData = {
       "contact": {
           "title": "Contact",
           "intro": "Come hang out, talk video games, or watch me fail.",
-          "footer": "If you read this you're gay.",
           "taglines": {
               "discord": "Join my server",
               "youtube": "Random crap",
@@ -31,7 +30,8 @@ const defaultData = {
               "pinterest": "Art I like",
               "characterhub": "My characters",
               "bluesky": "Irrelevant"
-          }
+          },
+          "badges": []
       },
       "blog": {
           "title": "Blog",

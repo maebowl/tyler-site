@@ -138,10 +138,26 @@ function Contact() {
           ))}
         </div>
 
-        {/* Fun footer */}
-        {siteSettings.contact.footer && (
-          <div className="contact-footer">
-            <p>{siteSettings.contact.footer}</p>
+        {/* Badges Section */}
+        {siteSettings.contact.badges && siteSettings.contact.badges.length > 0 && (
+          <div className="badges-section">
+            <div className="badges-grid">
+              {siteSettings.contact.badges.map((badge, index) => (
+                badge.url ? (
+                  <a
+                    key={index}
+                    href={badge.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="badge-link"
+                  >
+                    <img src={badge.image} alt={badge.alt || 'Badge'} className="badge-img" />
+                  </a>
+                ) : (
+                  <img key={index} src={badge.image} alt={badge.alt || 'Badge'} className="badge-img" />
+                )
+              ))}
+            </div>
           </div>
         )}
       </div>

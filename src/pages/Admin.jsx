@@ -391,14 +391,6 @@ function SiteSettingsManager({ siteSettings, updateSiteSettings }) {
               rows={2}
             />
           </label>
-          <label>
-            <span>Footer Text</span>
-            <input
-              value={siteSettings.contact.footer || ''}
-              onChange={(e) => updateSiteSettings('contact', { footer: e.target.value })}
-              placeholder="Or just yell into the void..."
-            />
-          </label>
         </div>
         <h4 className="subsection-title">Social Taglines</h4>
         <p className="manager-note">Customize the tagline shown above each social link.</p>
@@ -415,6 +407,62 @@ function SiteSettingsManager({ siteSettings, updateSiteSettings }) {
               />
             </label>
           ))}
+        </div>
+        <h4 className="subsection-title">Badges</h4>
+        <p className="manager-note">Add 88x31 badges. Each badge needs an image URL and optional link URL.</p>
+        <div className="badges-manager">
+          {(siteSettings.contact.badges || []).map((badge, index) => (
+            <div key={index} className="badge-item">
+              <img src={badge.image} alt={badge.alt || 'Badge'} className="badge-preview" />
+              <div className="badge-fields">
+                <input
+                  value={badge.image}
+                  onChange={(e) => {
+                    const newBadges = [...(siteSettings.contact.badges || [])]
+                    newBadges[index] = { ...badge, image: e.target.value }
+                    updateSiteSettings('contact', { badges: newBadges })
+                  }}
+                  placeholder="Image URL"
+                />
+                <input
+                  value={badge.url || ''}
+                  onChange={(e) => {
+                    const newBadges = [...(siteSettings.contact.badges || [])]
+                    newBadges[index] = { ...badge, url: e.target.value }
+                    updateSiteSettings('contact', { badges: newBadges })
+                  }}
+                  placeholder="Link URL (optional)"
+                />
+                <input
+                  value={badge.alt || ''}
+                  onChange={(e) => {
+                    const newBadges = [...(siteSettings.contact.badges || [])]
+                    newBadges[index] = { ...badge, alt: e.target.value }
+                    updateSiteSettings('contact', { badges: newBadges })
+                  }}
+                  placeholder="Alt text"
+                />
+              </div>
+              <button
+                className="btn-remove"
+                onClick={() => {
+                  const newBadges = (siteSettings.contact.badges || []).filter((_, i) => i !== index)
+                  updateSiteSettings('contact', { badges: newBadges })
+                }}
+              >
+                ×
+              </button>
+            </div>
+          ))}
+          <button
+            className="btn-secondary"
+            onClick={() => {
+              const newBadges = [...(siteSettings.contact.badges || []), { image: '', url: '', alt: '' }]
+              updateSiteSettings('contact', { badges: newBadges })
+            }}
+          >
+            + Add Badge
+          </button>
         </div>
       </div>
 

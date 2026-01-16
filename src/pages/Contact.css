@@ -305,18 +305,33 @@
 .social-characterhub .social-tagline { color: #7C4DFF; }
 .social-bluesky .social-tagline { color: #0085FF; }
 
-/* Footer */
-.contact-footer {
-  margin-top: 4rem;
-  text-align: center;
+/* Badges Section */
+.badges-section {
+  margin-top: 3rem;
   animation: fade-in 0.8s ease-out 0.5s backwards;
 }
 
-.contact-footer p {
-  font-size: 0.9375rem;
-  color: var(--text-dim);
-  opacity: 0.6;
-  font-style: italic;
+.badges-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.badge-link {
+  display: block;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.badge-link:hover {
+  transform: scale(1.05);
+}
+
+.badge-img {
+  display: block;
+  height: 31px;
+  width: auto;
+  image-rendering: pixelated;
 }
 
 @media (max-width: 768px) {

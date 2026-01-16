@@ -198,6 +198,53 @@
   text-transform: capitalize;
 }
 
+/* Badges Manager */
+.badges-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: var(--bg-primary);
+  border-radius: 8px;
+}
+
+.badge-preview {
+  width: 88px;
+  height: 31px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.badge-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.badge-fields input {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 6px;
+  color: var(--text-primary);
+}
+
+.badge-fields input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
 .add-form {
   background: var(--bg-secondary);
   padding: 1.5rem;
