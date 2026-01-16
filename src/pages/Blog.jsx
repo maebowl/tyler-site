@@ -4,14 +4,18 @@ import { useSiteData } from '../data/siteData'
 import './Blog.css'
 
 function Blog() {
-  const { posts } = useSiteData()
+  const { posts, siteSettings } = useSiteData()
   const [ref, isVisible] = useScrollAnimation(0.1)
+
+  // Get blog settings with fallbacks
+  const blogTitle = siteSettings.blog?.title || 'Blog'
+  const blogIntro = siteSettings.blog?.intro || 'Thoughts, tutorials, and random musings.'
 
   return (
     <section className="blog-page">
       <div ref={ref} className={`section-container ${isVisible ? 'animate-in' : ''}`}>
-        <h1 className="page-title">Blog</h1>
-        <p className="page-intro">Thoughts, tutorials, and random musings.</p>
+        <h1 className="page-title">{blogTitle}</h1>
+        <p className="page-intro">{blogIntro}</p>
 
         <div className="posts-list">
           {posts.length === 0 ? (

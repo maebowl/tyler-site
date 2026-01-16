@@ -21,7 +21,21 @@ const defaultData = {
       },
       "contact": {
           "title": "Contact",
-          "intro": "Come hang out, talk video games, or watch me fail."
+          "intro": "Come hang out, talk video games, or watch me fail.",
+          "footer": "Or just yell into the void. I might hear you.",
+          "taglines": {
+              "discord": "Let's chat!",
+              "youtube": "Watch me create",
+              "twitch": "Catch me live",
+              "letterboxd": "Movie opinions",
+              "pinterest": "Visual inspo",
+              "characterhub": "My characters",
+              "bluesky": "Hot takes"
+          }
+      },
+      "blog": {
+          "title": "Blog",
+          "intro": "Thoughts, updates, and random musings."
       }
   },
   videos: [
@@ -123,6 +137,12 @@ const defaultData = {
           "name": "CharacterHub",
           "handle": "Nozoa",
           "url": "https://characterhub.com/profile/Nozoa"
+      },
+      {
+          "id": "bluesky",
+          "name": "Bluesky",
+          "handle": "your-handle",
+          "url": "https://bsky.app/profile/your-handle.bsky.social"
       }
   ],
 }

@@ -209,6 +209,7 @@
 .social-letterboxd .card-bg { background: linear-gradient(135deg, rgba(0, 224, 84, 0.1) 0%, transparent 60%); }
 .social-pinterest .card-bg { background: linear-gradient(135deg, rgba(230, 0, 35, 0.1) 0%, transparent 60%); }
 .social-characterhub .card-bg { background: linear-gradient(135deg, rgba(124, 77, 255, 0.1) 0%, transparent 60%); }
+.social-bluesky .card-bg { background: linear-gradient(135deg, rgba(0, 133, 255, 0.1) 0%, transparent 60%); }
 
 .card-content {
   position: relative;
@@ -295,12 +296,14 @@
 .social-letterboxd .social-icon-wrapper { color: #00E054; }
 .social-pinterest .social-icon-wrapper { color: #E60023; }
 .social-characterhub .social-icon-wrapper { color: #7C4DFF; }
+.social-bluesky .social-icon-wrapper { color: #0085FF; }
 
 .social-youtube .social-tagline { color: #FF0000; }
 .social-twitch .social-tagline { color: #9146FF; }
 .social-letterboxd .social-tagline { color: #00E054; }
 .social-pinterest .social-tagline { color: #E60023; }
 .social-characterhub .social-tagline { color: #7C4DFF; }
+.social-bluesky .social-tagline { color: #0085FF; }
 
 /* Footer */
 .contact-footer {

@@ -391,6 +391,53 @@ function SiteSettingsManager({ siteSettings, updateSiteSettings }) {
               rows={2}
             />
           </label>
+          <label>
+            <span>Footer Text</span>
+            <input
+              value={siteSettings.contact.footer || ''}
+              onChange={(e) => updateSiteSettings('contact', { footer: e.target.value })}
+              placeholder="Or just yell into the void..."
+            />
+          </label>
+        </div>
+        <h4 className="subsection-title">Social Taglines</h4>
+        <p className="manager-note">Customize the tagline shown above each social link.</p>
+        <div className="settings-fields taglines-grid">
+          {Object.entries(siteSettings.contact.taglines || {}).map(([id, tagline]) => (
+            <label key={id}>
+              <span>{id}</span>
+              <input
+                value={tagline}
+                onChange={(e) => updateSiteSettings('contact', {
+                  taglines: { ...siteSettings.contact.taglines, [id]: e.target.value }
+                })}
+                placeholder={`Tagline for ${id}`}
+              />
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h3>Blog Page</h3>
+        <div className="settings-fields">
+          <label>
+            <span>Title</span>
+            <input
+              value={siteSettings.blog?.title || ''}
+              onChange={(e) => updateSiteSettings('blog', { title: e.target.value })}
+              placeholder="Blog"
+            />
+          </label>
+          <label>
+            <span>Intro Text</span>
+            <textarea
+              value={siteSettings.blog?.intro || ''}
+              onChange={(e) => updateSiteSettings('blog', { intro: e.target.value })}
+              placeholder="Page introduction..."
+              rows={2}
+            />
+          </label>
         </div>
       </div>
     </div>

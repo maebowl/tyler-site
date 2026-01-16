@@ -33,15 +33,22 @@ const socialIcons = {
       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
     </svg>
   ),
+  bluesky: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="social-icon">
+      <path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"/>
+    </svg>
+  ),
 }
 
-const socialTaglines = {
+// Default taglines as fallback
+const defaultTaglines = {
   discord: "Let's chat!",
   youtube: "Watch me create",
   twitch: "Catch me live",
   letterboxd: "Movie opinions",
   pinterest: "Visual inspo",
   characterhub: "My characters",
+  bluesky: "Hot takes",
 }
 
 function Contact() {
@@ -51,6 +58,10 @@ function Contact() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  // Get taglines from settings or use defaults
+  const taglines = siteSettings.contact.taglines || defaultTaglines
+  const getTagline = (id) => taglines[id] || defaultTaglines[id] || "Find me here"
 
   // Get featured social (first one, or discord if exists)
   const featuredSocial = socials.find(s => s.id === 'discord') || socials[0]
@@ -80,7 +91,7 @@ function Contact() {
                 {socialIcons[featuredSocial.id]}
               </div>
               <div className="featured-info">
-                <span className="featured-tagline">{socialTaglines[featuredSocial.id] || "Find me here"}</span>
+                <span className="featured-tagline">{getTagline(featuredSocial.id)}</span>
                 <span className="featured-name">{featuredSocial.name}</span>
                 <span className="featured-handle">@{featuredSocial.handle}</span>
               </div>
@@ -113,7 +124,7 @@ function Contact() {
                   {socialIcons[social.id]}
                 </div>
                 <div className="social-info">
-                  <span className="social-tagline">{socialTaglines[social.id] || "Check it out"}</span>
+                  <span className="social-tagline">{getTagline(social.id)}</span>
                   <span className="social-name">{social.name}</span>
                   <span className="social-handle">@{social.handle}</span>
                 </div>
@@ -128,9 +139,11 @@ function Contact() {
         </div>
 
         {/* Fun footer */}
-        <div className="contact-footer">
-          <p>Or just yell into the void. I might hear you.</p>
-        </div>
+        {siteSettings.contact.footer && (
+          <div className="contact-footer">
+            <p>{siteSettings.contact.footer}</p>
+          </div>
+        )}
       </div>
     </div>
   )
