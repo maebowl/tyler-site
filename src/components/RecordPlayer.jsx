@@ -31,6 +31,13 @@ export default function RecordPlayer() {
     }
   }, [isPlaying])
 
+  // Auto-play when track changes and isPlaying is true
+  useEffect(() => {
+    if (audioRef.current && currentSong && isPlaying) {
+      audioRef.current.play().catch(() => setIsPlaying(false))
+    }
+  }, [currentIndex, currentSong])
+
   const handleTimeUpdate = () => {
     if (audioRef.current) {
       setProgress(audioRef.current.currentTime)
