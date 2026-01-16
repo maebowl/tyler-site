@@ -46,6 +46,11 @@ const defaultData = {
                   "image": "https://mabelwallin.com/uploads/1768557812569-IMG_1919.gif",
                   "url": "https://www.youtube.com/c/scottthewoz",
                   "alt": "ScottWoz"
+              },
+              {
+                  "image": "https://zenoslots.net/IMAGES/BUTTONS/ZENOSLOTS_Mini.png",
+                  "url": "https://zenoslots.net",
+                  "alt": "zenoslots"
               }
           ]
       },
