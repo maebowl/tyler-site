@@ -17,7 +17,7 @@ const defaultData = {
       },
       "videos": {
           "title": "Videos",
-          "intro": "Check out some of my favorite videos and content."
+          "intro": "Check out some of my content."
       },
       "contact": {
           "title": "Contact",
