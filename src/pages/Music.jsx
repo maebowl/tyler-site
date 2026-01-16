@@ -49,26 +49,42 @@ function Music() {
             {siteSettings.music.intro}
           </p>
         </header>
-        <div className="song-list">
+        <div className="songs-grid">
           {songs.map((song, index) => {
-            const hasVideo = !!song.youtubeUrl
+            const videoId = getYouTubeId(song.youtubeUrl)
+            const thumbnailUrl = videoId
+              ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
+              : null
+
             return (
               <div
                 key={song.id}
-                className={`song-item ${hasVideo ? 'has-video' : ''}`}
+                className={`song-card ${videoId ? 'has-video' : ''}`}
                 style={{ animationDelay: `${index * 0.05}s` }}
                 onClick={() => handleSongClick(song)}
               >
-                <span className="song-number">{String(index + 1).padStart(2, '0')}</span>
-                <div className="song-info">
+                <div className="song-thumbnail">
+                  {thumbnailUrl ? (
+                    <img src={thumbnailUrl} alt={song.title} />
+                  ) : (
+                    <div className="thumbnail-placeholder">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                      </svg>
+                    </div>
+                  )}
+                  {videoId && (
+                    <div className="play-overlay">
+                      <svg className="play-button" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                <div className="song-details">
                   <span className="song-title">{song.title}</span>
                   <span className="song-artist">{song.artist}</span>
                 </div>
-                {hasVideo && (
-                  <svg className="play-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                )}
               </div>
             )
           })}
